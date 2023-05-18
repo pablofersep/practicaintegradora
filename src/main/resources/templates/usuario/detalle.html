@@ -1,0 +1,31 @@
+<h2>-- Detalles de Usuario --</h2>
+<div class="table" th:object="${usuario}">
+    <div class="row">
+        <div class="cell bold">Campo</div>
+        <div class="cell bold">Valor</div>
+    </div>
+    <div class="row">
+        <div class="cell">Usuario</div>
+        <div class="cell" th:text="*{email}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Clave</div>
+        <div class="cell" th:text="*{clave}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Fecha Ultima Conexion</div>
+        <div class="cell" th:text="*{fechaUltimaConexion}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Numero Accesos</div>
+        <div class="cell" th:text="*{numeroAccesos}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">¿Esta Borrado?</div>
+        <div class="cell">
+            <th:block th:if="${usuario.auditoria.fechaBorradoEntidad}!=null"
+                      th:text="${usuario.auditoria.fechaBorradoEntidad}"></th:block>
+            <th:block th:if="${usuario.auditoria.fechaBorradoEntidad}==null">No</th:block>
+        </div>
+    </div>
+</div>

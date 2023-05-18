@@ -1,0 +1,58 @@
+<form action="/cliente/listado" method="post">
+    <fieldset>
+        <legend>Busqueda de clientes</legend>
+        <div>
+            <label>Patrón de Apellido</label>
+            <input type="text" name="apellidoPattern"/>
+        </div>
+        <div>
+            <label>Tipo de Cliente</label>
+            <select name="tipoCliente">
+                <option value="All">Todos</option>
+                <option th:each="tipoCliente : ${tiposCliente}" th:value="${tipoCliente.siglas}" th:text="${tipoCliente.nombre}"></option>
+            </select>
+        </div>
+        <div>
+            <label>Fecha de Nacimiento Inicial</label>
+            <input type="date" name="fechaIni" id="fechaIni"/>
+            <label>Fecha de Nacimiento Final</label>
+            <input type="date" name="fechaFin" id="fechaFin"/>
+        </div>
+        <div>
+            <label>Gasto Acumulado Minimo</label>
+            <input type="number" name="gastoIni" id="gastoIni"/>
+            <label>Gasto Acumulado Máximo</label>
+            <input type="number" name="gastoFin" id="gastoFin"/>
+        </div>
+
+        <input type="submit" value="Buscar">
+    </fieldset>
+</form>
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Usuario</div>
+        <div class="cell bold">Nombre y Apellido</div>
+        <div class="cell bold">Tipo</div>
+        <div class="cell bold">Fecha Nacimiento</div>
+        <div class="cell bold">Gasto Acumulado</div>
+        <div class="cell bold">¿Esta Borrado?</div>
+        <div class="cell bold">Detalle</div>
+    </div>
+    <div class="row" th:each="cliente : ${clientes}">
+        <div class="cell" th:text="${cliente.id}"></div>
+        <div class="cell">
+            <th:block th:text="${cliente.nombre}"/>
+            <th:block th:text="${cliente.apellidos}"/>
+        </div>
+        <div class="cell" th:text="${cliente.tipoCliente}"></div>
+        <div class="cell" th:text="${cliente.fechaNacimiento}"></div>
+        <div class="cell" th:text="${cliente.gastoAcumuladoCliente}"></div>
+        <div class="cell"><a th:href="|http://localhost:8080/cliente/detalle/${cliente.id}|">Detalles</a></div>
+        <div class="cell" th:if="${cliente.auditoria}!=null">
+            <th:block th:if="${cliente.auditoria.fechaBorradoEntidad}!=null"
+                      th:text="${${cliente.auditoria.fechaBorradoEntidad}}"></th:block>
+            <th:block th:if="${cliente.auditoria.fechaBorradoEntidad}==null">Si</th:block>
+        </div>
+    </div>
+</div>

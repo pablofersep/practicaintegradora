@@ -1,0 +1,104 @@
+<h2>-- Creacion de Producto --</h2>
+<form action="/producto/crear" th:object="${creacionProducto}" method="post">
+    <div class="table">
+        <div class="row">
+            <div class="cell bold">Campo</div>
+            <div class="cell bold">Valor</div>
+        </div>
+        <div class="row">
+            <div class="cell">Codigo</div>
+            <div class="cell">
+                <input type="text" th:field="*{codigo}">
+                <div class="rojo" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Descripcion</div>
+            <div class="cell">
+                <input type="text" th:field="*{descripcion}">
+                <div class="rojo" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Precio</div>
+            <div class="cell">
+                <input type="text" th:field="*{precio}">
+                <div class="rojo" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Cantidad Almacen</div>
+            <div class="cell">
+                <input type="text" th:field="*{cantidadAlmacen}">
+                <div class="rojo" th:if="${#fields.hasErrors('cantidadAlmacen')}" th:errors="*{cantidadAlmacen}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Umbral Solicitud Proveedor</div>
+            <div class="cell">
+                <input type="text" th:field="*{umbralSolicitudProveedor}">
+                <div class="rojo" th:if="${#fields.hasErrors('umbralSolicitudProveedor')}" th:errors="*{umbralSolicitudProveedor}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Umbral Oculto en Tienda</div>
+            <div class="cell">
+                <input type="text" th:field="*{umbralOcultoEnTienda}">
+                <div class="rojo" th:if="${#fields.hasErrors('umbralOcultoEnTienda')}" th:errors="*{umbralOcultoEnTienda}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">¿Tiene Oferta?</div>
+            <div class="cell">
+                <input type="checkbox" th:field="*{enOferta}">
+                <div class="rojo" th:if="${#fields.hasErrors('enOferta')}" th:errors="*{enOferta}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Descuento</div>
+            <div class="cell">
+                <input type="text" th:field="*{descuento}">
+                <div class="rojo" th:if="${#fields.hasErrors('descuento')}" th:errors="*{descuento}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">¿Es novedad?</div>
+            <div class="cell">
+                <input type="checkbox" th:field="*{esNovedad}">
+                <div class="rojo" th:if="${#fields.hasErrors('esNovedad')}" th:errors="*{esNovedad}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Marca</div>
+            <div class="cell">
+                <input type="text" th:field="*{marca}">
+                <div class="rojo" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Modelo</div>
+            <div class="cell">
+                <input type="text" th:field="*{modelo}">
+                <div class="rojo" th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Comentarios</div>
+            <div class="cell">
+                <input type="text" th:field="*{comentarios}">
+                <div class="rojo" th:if="${#fields.hasErrors('comentarios')}" th:errors="*{comentarios}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell">Categorias</div>
+            <div class="cell">
+                <select multiple th:field="*{categorias}">
+                    <option th:each="categoria : ${categoriasList}" th:value="${categoria.codigo}"
+                            th:text="${categoria.descripcion}"></option>
+                </select>
+                <div class="rojo" th:if="${#fields.hasErrors('categorias')}" th:errors="*{categorias}"/>
+            </div>
+        </div>
+    </div>
+    <input type="submit" value="Crear">
+</form>

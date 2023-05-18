@@ -1,0 +1,23 @@
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Codigo</div>
+        <div class="cell bold">Descripcion</div>
+        <div class="cell bold">Precio</div>
+        <div class="cell bold">Unidades Vendidas</div>
+        <div class="cell bold">Cantidad Almacen</div>
+        <div class="cell bold">Umbral Solicitud</div>
+        <div class="cell bold">Umbral Oculto</div>
+        <div class="cell bold">Detalle</div>
+    </div>
+    <div class="row" th:each="producto : ${productos}">
+        <div class="cell" th:text="${producto.codigo}"></div>
+        <div class="cell" th:text="${producto.descripcion}"></div>
+        <div class="cell" th:text="${producto.precio}"></div>
+        <div class="cell" th:text="${producto.unidadesVendidas}"></div>
+        <div class="cell" th:text="${producto.cantidadAlmacen}"></div>
+        <div class="cell" th:text="${producto.umbralSolicitudProveedor}"></div>
+        <div class="cell" th:text="${producto.umbralOcultoEnTienda}"></div>
+        <div class="cell"><a th:href="|http://localhost:8080/producto/detalle/${producto.codigo}|">Detalles</a></div>
+    </div>
+</div>

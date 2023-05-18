@@ -1,0 +1,29 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Practica Integradora</title>
+    <link rel="stylesheet" th:href="@{/css/estandar.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#locales").change(function () {
+                var valueOpcionSeleccionada = $('#locales').val();
+                if (valueOpcionSeleccionada != ''){
+                    window.location.replace(window.location.pathname + '?lang=' + valueOpcionSeleccionada);
+                    //window.location.reload()
+                }
+            });
+        });
+    </script>
+    <script>
+        function llamame(nombre) {
+            $.ajax({method: "GET", url: "http://localhost:8080/rest/recuperarClave", data: {correo: nombre}}).done(function (data) {
+                alert("La contraseña es: " + data);
+            }).fail(function () {
+                alert('Obtencion contraseña fallida');
+            }).always(function () {});
+        }
+    </script>
+    <script type="text/javascript" th:src="@{/js/funciones.js}"></script>
+    <link rel="icon" href="data:,">
+</head>

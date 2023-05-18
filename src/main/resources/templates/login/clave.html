@@ -1,0 +1,14 @@
+<h2 th:text="${email}"></h2>
+<form method="post" action="/login/clave">
+  <label for="clave">Clave: </label>
+  <input name="clave" id="clave" type="password"/>
+  <br>
+  <th:block th:if="${error}!=null">
+    <label th:text="${error}"></label>
+    <br>
+  </th:block>
+  <a id="olvidarClave" href="" th:usuario="${email}" th:onclick="llamame(this.getAttribute('usuario'))" >¿Has olvidado tu contraseña?</a>
+  <input type="button" value="Mostrar Contraseña" onmousedown="showPassword('clave', 'confirmarClave')" onmouseup="hidePassword('clave', 'confirmarClave')"/>
+  <input type="submit" value="Enviar"/>
+  <input type="reset" value="Reesttablecer">
+</form>

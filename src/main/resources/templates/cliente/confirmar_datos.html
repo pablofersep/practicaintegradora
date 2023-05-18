@@ -1,0 +1,63 @@
+<div>
+    <div class="table" th:object="${cliente}">
+        <div class="row">
+            <div class="cell" th:text="#{label.nombre}"></div>
+            <div class="cell" th:text="*{nombre}"></div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.apellidos}"></div>
+            <div class="cell" th:text="*{apellidos}"></div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.genero}"></div>
+            <div class="cell" th:text="*{genero}"></div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.pais_seleccionado}"></div>
+            <div class="cell" th:text="*{paisNacimiento.nombre}"></div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.fecha_nacimiento}"></div>
+            <div class="cell" th:text="*{fechaNacimiento}"></div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.tipo_documento}"></div>
+            <div class="cell" th:text="*{tipoDocumentoCliente}"></div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.documento}"></div>
+            <div class="cell" th:text="*{documento}"></div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.telefono_movil}"></div>
+            <div class="cell" th:text="*{telefonoMovil}"></div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{fieldset.direccion}"></div>
+            <div class="cell">
+                <div th:text="*{direccion.localidad}"/>,
+                <div th:text="*{direccion.nombre}"/>,
+                <div th:text="*{direccion.numero}"/>,
+                <div th:text="*{direccion.tipoVia}"/>,
+                <div th:text="*{direccion.portal}"/>,
+                <div th:text="*{direccion.planta}"/>,
+                <div th:text="*{direccion.puerta}"/>,
+                <div th:text="*{direccion.region}"/>,
+                <div th:text="*{direccion.codigoPostal}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.categorias}"></div>
+            <div class="cell">
+                <li th:each="categoria : *{categoriasInteres}" th:text="${categoria.descripcion}"></li>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell" th:text="#{label.comentarios}"></div>
+            <div class="cell" th:text="*{comentarios}"></div>
+        </div>
+    </div>
+</div>
+<form action="/registro/cliente/confirmar_datos" method="post">
+    <input type="submit" value="Enviar">
+</form>

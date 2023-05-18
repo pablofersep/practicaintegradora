@@ -1,0 +1,23 @@
+<h2>-- Categoria --</h2>
+<div class="table" th:object="${categoria}">
+    <div class="row">
+        <div class="cell bold">Campo</div>
+        <div class="cell bold">Valor</div>
+    </div>
+    <div class="row">
+        <div class="cell">Codigo</div>
+        <div class="cell" th:text="*{codigo}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Descripcion</div>
+        <div class="cell" th:text="*{descripcion}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Categoria Padre</div>
+        <div class="cell" th:text="*{categoriaPadre}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Categoria Padre</div>
+        <div class="cell"><li th:each="category : *{categoriasHijas}" th:text="${category}"></li></div>
+    </div>
+</div>

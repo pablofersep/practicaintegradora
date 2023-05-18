@@ -1,0 +1,32 @@
+<form action="/registro/cliente/datos_personales" method="post" th:object="${datosPersonales}">
+    <div>
+        <label th:text="#{label.nombre}"></label>
+        <input th:field="*{nombre}" type="text"/>
+        <div class="rojo" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"/>
+    </div>
+    <div>
+        <label th:text="#{label.apellidos}"></label>
+        <input type="text" th:field="*{apellidos}"/>
+        <div class="rojo" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"/>
+    </div>
+    <div>
+        <label th:text="#{label.fecha_nacimiento}"></label>
+        <input type="date" th:field="*{fechaNacimiento}"/>
+        <div class="rojo" th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"/>
+    </div>
+    <div>
+        <label th:text="#{label.pais_seleccionado}"></label>
+        <select th:field="*{paisSeleccionado}">
+            <option th:each="pais : ${paises}" th:value="${pais.siglas}" th:text="${pais.nombre}"></option>
+        </select>
+        <div class="rojo" th:if="${#fields.hasErrors('paisSeleccionado')}" th:errors="*{paisSeleccionado}"/>
+    </div>
+    <div>
+        <label th:text="#{label.genero}"></label>
+        <label th:each="genero : ${generos}">
+            <input type="radio" th:value="${genero.siglas}" th:field="*{generoSeleccionado}"/><label th:text="${genero.nombre}"/>
+        </label>
+        <div class="rojo" th:if="${#fields.hasErrors('generoSeleccionado')}" th:errors="*{generoSeleccionado}"/>
+    </div>
+    <input type="submit" value="Siguente Paso">
+</form>

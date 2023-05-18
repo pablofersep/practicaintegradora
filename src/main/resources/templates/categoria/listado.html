@@ -1,0 +1,17 @@
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Codigo</div>
+        <div class="cell bold">Descripcion</div>
+        <div class="cell bold">Categoria Padre</div>
+        <div class="cell bold">Categorias Hijas</div>
+        <div class="cell bold">Detalles</div>
+    </div>
+    <div class="row" th:each="categoria : ${categorias}">
+        <div class="cell" th:text="${categoria.codigo}"></div>
+        <div class="cell" th:text="${categoria.descripcion}"></div>
+        <div class="cell" th:text="${categoria.categoriaPadre}"></div>
+        <div class="cell">Cat Hijas</div>
+        <div class="cell"><a th:href="|http://localhost:8080/categoria/detalle/${categoria.codigo}|">Detalles</a></div>
+    </div>
+</div>

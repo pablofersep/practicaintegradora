@@ -1,0 +1,28 @@
+<h2>--Creación de Usuario--</h2>
+<div th:text="${mensaje}"></div>
+<form method="post" action="/registro/usuario" th:object="${registroUsuario}"
+      onsubmit="return confirm('¿Estas seguro de que quieres crear un usuario?')">
+    <div>
+        <label>Email: </label>
+        <input th:field="*{email}" type="text" />
+        <label class="rojo" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+    </div>
+    <div>
+        <label>Clave: </label>
+        <input th:field="*{clave}" type="password" />
+        <label class="rojo" th:if="${#fields.hasErrors('clave')}" th:errors="*{clave}" />
+    </div>
+    <div>
+        <label>Confirmar Clave: </label>
+        <input th:field="*{confirmarClave}" type="password" />
+        <label class="rojo" th:if="${#fields.hasErrors('confirmarClave')}" th:errors="*{confirmarClave}" />
+    </div>
+    <div>
+        <ul>
+            <li class="rojo" th:each="error : ${#fields.errors('global')}" th:text="${error}" />
+        </ul>
+    </div>
+    <input type="button" value="Mostrar Contraseña" onmousedown="showPassword('clave', 'confirmarClave')" onmouseup="hidePassword('clave', 'confirmarClave')"/>
+    <input type="submit" value="Enviar" >
+    <input type="reset" value="Reesttablecer">
+</form>

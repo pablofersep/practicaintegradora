@@ -1,0 +1,35 @@
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Usuario</div>
+        <div class="cell bold">Clave</div>
+        <div class="cell bold">Fecha Ultima Conexion</div>
+        <div class="cell bold">Numero Accesos</div>
+        <div class="cell bold">Nombre Cliente</div>
+        <div class="cell bold">¿Esta Borrado?</div>
+        <div class="cell bold">Borrar</div>
+        <div class="cell bold">Alta</div>
+        <div class="cell bold">Bloqueo</div>
+        <div class="cell bold">Desbloqueo</div>
+        <div class="cell bold">Detalle</div>
+    </div>
+    <div class="row" th:each="usuario : ${usuarios}">
+        <div class="cell" th:text="${usuario.email}"></div>
+        <div class="cell" th:text="${usuario.clave}"></div>
+        <div class="cell" th:text="${usuario.fechaUltimaConexion}"></div>
+        <div class="cell" th:text="${usuario.numeroAccesos}"></div>
+        <div class="cell">
+            <th:block th:if="${usuario.cliente}!=null" th:text="${usuario.cliente.nombre}"></th:block>
+            <th:block th:if="${usuario.cliente}==null">No tiene un Cliente Creado</th:block>
+        </div>
+        <div class="cell">
+            <th:block th:if="${usuario.auditoria.fechaBorradoEntidad}!=null" th:text="${usuario.auditoria.fechaBorradoEntidad}"></th:block>
+            <th:block th:if="${usuario.auditoria.fechaBorradoEntidad}==null">No</th:block>
+        </div>
+        <div class="cell"><a th:href="|http://localhost:8080/usuario/baja/${usuario.email}|">Borrar</a></div>
+        <div class="cell"><a th:href="|http://localhost:8080/usuario/alta/${usuario.email}|">Alta</a></div>
+        <div class="cell"><a th:href="|http://localhost:8080/usuario/bloqueo/${usuario.email}|">Bloqueo</a></div>
+        <div class="cell"><a th:href="|http://localhost:8080/usuario/desbloqueo/${usuario.email}|">Desbloqueo</a></div>
+        <div class="cell"><a th:href="|http://localhost:8080/usuario/detalle/${usuario.email}|">Detalle</a></div>
+    </div>
+</div>

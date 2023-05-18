@@ -1,0 +1,55 @@
+<h2>-- Detalles de Cliente --</h2>
+<div class="table" th:object="${cliente}">
+    <div class="row">
+        <div class="cell bold">Campo</div>
+        <div class="cell bold">Valor</div>
+    </div>
+    <div class="row">
+        <div class="cell">Usuario</div>
+        <div class="cell" th:text="*{id}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Nombre</div>
+        <div class="cell" th:text="*{nombre}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Apellidos</div>
+        <div class="cell" th:text="*{apellidos}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Género</div>
+        <div class="cell" th:text="*{genero}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Pais Nacimiento</div>
+        <div class="cell" th:text="*{paisNacimiento.nombre}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Tipo de Documento</div>
+        <div class="cell" th:text="*{tipoDocumentoCliente}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Documento</div>
+        <div class="cell" th:text="*{documento}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Telefono Movil</div>
+        <div class="cell" th:text="*{telefonoMovil}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Direccion</div>
+        <div class="cell">
+            <label th:text="*{direccion.localidad}"/>,
+            <label th:text="*{direccion.nombre}"/>,
+            <label th:text="*{direccion.numero}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">Gasto Acumulado</div>
+        <div class="cell" th:text="*{gastoAcumuladoCliente}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Comentarios</div>
+        <div class="cell" th:text="*{comentarios}"></div>
+    </div>
+</div>

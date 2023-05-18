@@ -1,0 +1,71 @@
+<form action="/registro/cliente/datos_contacto" method="post" th:object="${datosContacto}">
+    <div>
+        <label th:text="#{label.telefono_movil}"></label>
+        <input th:field="*{telefonoMovil}" type="text"/>
+        <div class="rojo" th:if="${#fields.hasErrors('telefonoMovil')}" th:errors="*{telefonoMovil}"/>
+    </div>
+    <div>
+        <label th:text="#{label.tipo_documento}"></label>
+        <select th:field="*{tipoDocumento}">
+            <option th:each="tipo : ${documentos}" th:value="${tipo.siglas}" th:text="${tipo.nombre}"></option>
+        </select>
+        <div class="rojo" th:if="${#fields.hasErrors('tipoDocumento')}" th:errors="*{tipoDocumento}"/>
+    </div>
+    <div>
+        <label th:text="#{label.documento}"></label>
+        <input type="text" th:field="*{documento}"/>
+        <div class="rojo" th:if="${#fields.hasErrors('documento')}" th:errors="*{documento}"/>
+    </div>
+    <fieldset>
+        <legend th:text="#{fieldset.direccion}"></legend>
+        <div>
+            <label th:text="#{label.nombre_direccion}"></label>
+            <input type="text" th:field="*{nombreDireccion}"/>
+            <div class="rojo" th:if="${#fields.hasErrors('nombreDireccion')}" th:errors="*{nombreDireccion}"/>
+        </div>
+        <div>
+            <label th:text="#{label.tipo_via}"></label>
+            <select th:field="*{tipoVia}">
+                <option th:each="tipo : ${vias}" th:value="${tipo.siglas}" th:text="${tipo.nombre}"></option>
+            </select>
+            <div class="rojo" th:if="${#fields.hasErrors('tipoVia')}" th:errors="*{tipoVia}"/>
+        </div>
+        <div>
+            <label th:text="#{label.numero}"></label>
+            <input type="text" th:field="*{numero}"/>
+            <div class="rojo" th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}"/>
+        </div>
+        <div>
+            <label th:text="#{label.portal}"></label>
+            <input type="text" th:field="*{portal}"/>
+            <div class="rojo" th:if="${#fields.hasErrors('portal')}" th:errors="*{portal}"/>
+        </div>
+        <div>
+            <label th:text="#{label.planta}"></label>
+            <input type="text" th:field="*{planta}"/>
+            <div class="rojo" th:if="${#fields.hasErrors('planta')}" th:errors="*{planta}"/>
+        </div>
+        <div>
+            <label th:text="#{label.puerta}"></label>
+            <input type="text" th:field="*{puerta}"/>
+            <div class="rojo" th:if="${#fields.hasErrors('puerta')}" th:errors="*{puerta}"/>
+        </div>
+        <div>
+            <label th:text="#{label.localidad}"></label>
+            <input type="text" th:field="*{localidad}"/>
+            <div class="rojo" th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"/>
+        </div>
+        <div>
+            <label th:text="#{label.region}"></label>
+            <input type="text" th:field="*{region}"/>
+            <div class="rojo" th:if="${#fields.hasErrors('region')}" th:errors="*{region}"/>
+        </div>
+        <div>
+            <label th:text="#{label.codigo_postal}"></label>
+            <input type="text" th:field="*{codigoPostal}"/>
+            <div class="rojo" th:if="${#fields.hasErrors('codigoPostal')}" th:errors="*{codigoPostal}"/>
+        </div>
+    </fieldset>
+    <a class="button" href="http://localhost:8080/registro/cliente/datos_personales" role="button">Volver atras</a>
+    <input type="submit" value="Siguente Paso">
+</form>

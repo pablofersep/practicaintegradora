@@ -1,0 +1,72 @@
+<h2>-- Detalles de Producto --</h2>
+<div class="table" th:object="${producto}">
+    <div class="row">
+        <div class="cell bold">Campo</div>
+        <div class="cell bold">Valor</div>
+    </div>
+    <div class="row">
+        <div class="cell">Codigo</div>
+        <div class="cell" th:text="*{codigo}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Descripcion</div>
+        <div class="cell" th:text="*{descripcion}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Precio</div>
+        <div class="cell" th:text="*{precio}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Unidades Vendidas</div>
+        <div class="cell" th:text="*{unidadesVendidas}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Gasto Acumulado</div>
+        <div class="cell" th:text="*{gastoAcumulado}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Cantidad Almacen</div>
+        <div class="cell" th:text="*{cantidadAlmacen}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Umbral Solicitud Proveedor</div>
+        <div class="cell" th:text="*{umbralSolicitudProveedor}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Umbral Oculto en Tienda</div>
+        <div class="cell" th:text="*{umbralOcultoEnTienda}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">¿Tiene Oferta?</div>
+        <div class="cell" th:text="*{enOferta}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Descuento</div>
+        <div class="cell" th:text="*{descuento}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">¿Es novedad?</div>
+        <div class="cell" th:text="*{esNovedad}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Valoracion Producto</div>
+        <div class="cell" th:text="*{valoracionProducto}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Marca</div>
+        <div class="cell" th:text="*{marca}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Modelo</div>
+        <div class="cell" th:text="*{modelo}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Comentarios</div>
+        <div class="cell" th:text="*{comentarios}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Categorias</div>
+        <div class="cell"><li th:each="categoria : *{categorias}" th:text="${categoria.descripcion}"></li></div>
+    </div>
+
+</div>

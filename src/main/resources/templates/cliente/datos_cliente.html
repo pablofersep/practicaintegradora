@@ -1,0 +1,24 @@
+<form action="/registro/cliente/datos_cliente" method="post" th:object="${datosCliente}">
+    <fieldset>
+        <legend th:text="#{label.categorias}"></legend>
+        <div>
+            <label th:each="categoria : ${categorias}">
+                <input type="checkbox" th:value="${categoria.codigo}" th:field="*{categoriasSeleccionadas}"
+                       th:text="${categoria.descripcion}"/>
+            </label>
+            <br>
+        </div>
+    </fieldset>
+    <div>
+        <label th:text="#{label.comentarios}"></label><br>
+        <textarea th:field="*{comentarios}"></textarea><br>
+        <div class="rojo" th:if="${#fields.hasErrors('comentarios')}" th:errors="*{comentarios}"/>
+    </div>
+    <div>
+        <input type="checkbox" value="on" th:field="*{aceptaLicencia}"/>
+        <label th:text="#{label.licencia}"></label>
+        <div class="rojo" th:if="${#fields.hasErrors('aceptaLicencia')}" th:errors="*{aceptaLicencia}"/>
+    </div>
+    <a class="button" href="http://localhost:8080/registro/cliente/datos_contacto" role="button">Volver atras</a>
+    <input type="submit" value="Siguente Paso">
+</form>

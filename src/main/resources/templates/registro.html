@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head th:insert="~{/principales/head.html}"></head>
+<body>
+<div th:insert="~{${ruta}}"></div>
+<div>
+    <select name="locales" id="locales">
+        <option value=""></option>
+        <option th:each="pais : ${paises}" th:value="${pais.siglas}" th:text="${pais.nombre}" />
+    </select>
+</div>
+</body>
+</html>

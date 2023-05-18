@@ -1,0 +1,39 @@
+<!--<form action="/aviso/listado" method="post">
+    <fieldset>
+        <legend>Filtro Avisos</legend>
+        <div>
+            <label>Urgencia</label>
+            <select name="tipoCliente">
+                <option value="All">Todos</option>
+                <option th:each="urgenciaAviso : ${urgenciaAvisios}" th:value="${urgenciaAviso.siglas}" th:text="${urgenciaAviso.nombre}"></option>
+            </select>
+        </div>
+        <div>
+            <label>Fecha de Procesado Inicial</label>
+            <input type="date" name="fechaIni" id="fechaIni"/>
+            <label>Fecha de Procesado Final</label>
+            <input type="date" name="fechaFin" id="fechaFin"/>
+        </div>
+        <input type="submit" value="Buscar">
+    </fieldset>
+</form>-->
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Descripcion</div>
+        <div class="cell bold">Urgencia Aviso</div>
+        <div class="cell bold">Fecha Procesado</div>
+        <div class="cell bold">Usuario Admin que lo Procesa</div>
+        <div class="cell bold">Procesar(Visto)</div>
+    </div>
+    <div class="row" th:each="aviso : ${avisos}">
+        <div class="cell" th:text="${aviso.descripcion}"></div>
+        <div class="cell" th:text="${aviso.urgenciaAviso}"></div>
+        <div class="cell">
+            <th:block th:if="${aviso.fechaProcesado}!=null" th:text="${aviso.fechaProcesado}"></th:block>
+            <th:block th:if="${aviso.fechaProcesado}==null">Aun no ha sido procesado</th:block>
+        </div>
+        <div class="cell" th:text="${aviso.usuarioAdminProcesa}"></div>
+        <div class="cell"><a th:href="|http://localhost:8080/aviso/procesar/${aviso.id}|">Procesar</a></div>
+    </div>
+</div>
