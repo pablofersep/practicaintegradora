@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface UrgenciaAvisoService {
     List<UrgenciaAviso> findAll();
+    String getUrgenciaByCodigo(String codigo);
 }

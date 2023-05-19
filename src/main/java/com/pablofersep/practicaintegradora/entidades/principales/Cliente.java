@@ -50,7 +50,7 @@ public class Cliente {
     private BigDecimal gastoAcumuladoCliente;
     @Column(name = "tipo_cliente")
     private String tipoCliente;
-    @OneToMany
+    @ManyToMany
     private Set<Categoria> categoriasInteres;
     @Column
     private String comentarios;

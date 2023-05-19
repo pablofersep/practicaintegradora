@@ -16,4 +16,9 @@ public class UrgenciaAvisoServiceImplementacion implements UrgenciaAvisoService 
     public List<UrgenciaAviso> findAll() {
         return urgenciaAvisoRepository.findAll();
     }
+
+    @Override
+    public String getUrgenciaByCodigo(String codigo) {
+        return urgenciaAvisoRepository.findUrgenciaAvisoBySiglasEquals(codigo).getNombre();
+    }
 }

@@ -1,4 +1,5 @@
 <div class="red" th:text="${mensaje}"></div>
+<div class="cell"><a th:href="|http://localhost:8080/producto/crear|">Nuevo Producto</a></div>
 <div class="table">
     <div class="row">
         <div class="cell bold">Codigo</div>
@@ -9,6 +10,7 @@
         <div class="cell bold">Umbral Solicitud</div>
         <div class="cell bold">Umbral Oculto</div>
         <div class="cell bold">Detalle</div>
+        <div class="cell bold">Modificar</div>
     </div>
     <div class="row" th:each="producto : ${productos}">
         <div class="cell" th:text="${producto.codigo}"></div>
@@ -19,5 +21,6 @@
         <div class="cell" th:text="${producto.umbralSolicitudProveedor}"></div>
         <div class="cell" th:text="${producto.umbralOcultoEnTienda}"></div>
         <div class="cell"><a th:href="|http://localhost:8080/producto/detalle/${producto.codigo}|">Detalles</a></div>
+        <div class="cell"><a th:href="|http://localhost:8080/producto/modificar/${producto.codigo}|">Modificar</a></div>
     </div>
 </div>

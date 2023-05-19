@@ -25,5 +25,7 @@ public class Aviso {
     @ManyToOne
     @JoinColumn(name = "admin_procesa", foreignKey = @ForeignKey(name = "FK_usuario_aviso"))
     private Usuario usuarioAdminProcesa;
+    @Column
+    private LocalDate fechaCreacion;
 
 }

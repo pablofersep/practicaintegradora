@@ -1,16 +1,19 @@
 package com.pablofersep.practicaintegradora.controladores;
 
-import com.pablofersep.practicaintegradora.entidades.principales.Aviso;
+import com.pablofersep.practicaintegradora.entidades.principales.*;
 import com.pablofersep.practicaintegradora.entidades.principales.Categoria;
-import com.pablofersep.practicaintegradora.formobjects.aviso.ConsultaAviso;
 import com.pablofersep.practicaintegradora.repositorios.principales.AvisoRepository;
 import com.pablofersep.practicaintegradora.repositorios.principales.CategoriaRepository;
 import com.pablofersep.practicaintegradora.servicios.datos.UrgenciaAvisoService;
 import com.pablofersep.practicaintegradora.servicios.principales.AvisoService;
+import com.pablofersep.practicaintegradora.servicios.principales.ProductoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,12 +25,6 @@ import java.util.List;
 public class ControladorAviso {
     @Autowired
     private AvisoService avisoService;
-    @Autowired
-    private UrgenciaAvisoService urgenciaAvisoService;
-    @ModelAttribute
-    public void anadirListas(Model m) {
-        m.addAttribute("urgenciaAvisos", urgenciaAvisoService.findAll());
-    }
 
     @GetMapping(value = "/listado")
     public ModelAndView listadoCategoria(
@@ -45,24 +42,6 @@ public class ControladorAviso {
         }
         return mav;
     }
-    @PostMapping(value = "/listado")
-    public ModelAndView listadoCategoriaPost(
-            @RequestParam(required = false) String mensaje,
-            ConsultaAviso formObj
-    ){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("layout");
-        mav.addObject("ruta", "/aviso/listado");
-        mav.addObject("mensaje", mensaje);
-        List<Aviso> avisos = avisoService.findAll();
-        if (avisos != null){
-            mav.addObject("avisos", avisos);
-        }if (avisos.size()==0){
-            mav.addObject("mensaje", "No existen avisos en la BBDD");
-        }
-        return mav;
-    }
-
 
     @GetMapping(value = "/procesar/{id}")
     public ModelAndView procesarAviso(
@@ -86,8 +65,26 @@ public class ControladorAviso {
         return mav;
     }
 
-    public void creacionAviso(){
-
+    public static void creacionAviso(Producto p , ProductoService ps, UrgenciaAvisoService us, AvisoService as){
+        Aviso a = new Aviso();
+        if (p.getCantidadAlmacen() < p.getUmbralSolicitudProveedor()){
+            a.setUrgenciaAviso(us.getUrgenciaByCodigo("M"));
+            a.setFechaCreacion(LocalDate.now());
+            a.setDescripcion("Fecha-"+LocalDate.now()+"-Codigo-"+ p.getCodigo()+": Se rebasa el umbral de solicitud");
+            as.crear_modificar(a);
+        }if (p.getCantidadAlmacen() < p.getUmbralOcultoEnTienda()) {
+            a.setUrgenciaAviso(us.getUrgenciaByCodigo("A"));
+            a.setFechaCreacion(LocalDate.now());
+            a.setDescripcion("Fecha-"+LocalDate.now()+"-Codigo-"+ p.getCodigo()+": Se rebasa el umbral de ocultamiento");
+            p.getAuditoria().setFechaUltimaModificacion(LocalDate.now());
+            p.getAuditoria().setFechaBorradoEntidad(LocalDate.now());
+            ps.crear_modificar(p);
+            as.crear_modificar(a);
+        }if (p.getCantidadAlmacen() > p.getUmbralOcultoEnTienda()) {
+            p.getAuditoria().setFechaUltimaModificacion(LocalDate.now());
+            p.getAuditoria().setFechaBorradoEntidad(null);
+            ps.crear_modificar(p);
+        }
     }
 
 }

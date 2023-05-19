@@ -2,6 +2,8 @@ package com.pablofersep.practicaintegradora.entidades.principales;
 
 import com.pablofersep.practicaintegradora.entidades.auxiliares.Auditoria;
 import com.pablofersep.practicaintegradora.entidades.auxiliares.Imagen;
+import com.pablofersep.practicaintegradora.formobjects.producto.CreacionProducto;
+import com.pablofersep.practicaintegradora.servicios.principales.CategoriaService;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,5 +54,21 @@ public class Producto {
     private String comentarios;
     @Embedded
     private Auditoria auditoria;
+
+    public void bind(CreacionProducto c, CategoriaService cs){
+        setCodigo(c.getCodigo());
+        setDescripcion(c.getDescripcion());
+        setPrecio(BigDecimal.valueOf(Float.parseFloat(c.getPrecio())));
+        setCantidadAlmacen(Integer.parseInt(c.getCantidadAlmacen()));
+        setUmbralOcultoEnTienda(Integer.parseInt(c.getUmbralOcultoEnTienda()));
+        setUmbralSolicitudProveedor(Integer.parseInt(c.getUmbralSolicitudProveedor()));
+        setCategorias(cs.categoriasPorCodigos(c.getCategorias()));
+        setEnOferta(c.getEnOferta());
+        setEsNovedad(c.getEsNovedad());
+        setDescuento(BigDecimal.valueOf(Float.parseFloat(c.getDescuento())));
+        setMarca(c.getMarca());
+        setModelo(c.getModelo());
+        setComentarios(c.getComentarios());
+    }
 
 }

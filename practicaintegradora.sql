@@ -9,6 +9,10 @@ insert into genero(nombre, siglas) values ("Femenino", "F");
 insert into genero(nombre, siglas) values ("Masculino", "M");
 insert into genero(nombre, siglas) values ("No Binario", "N");
 insert into genero(nombre, siglas) values ("Otro", "O");
+insert into estado_pedido(nombre, siglas) values ("En preparacion", "P");
+insert into estado_pedido(nombre, siglas) values ("En transito", "T");
+insert into estado_pedido(nombre, siglas) values ("Extraviado", "X");
+insert into estado_pedido(nombre, siglas) values ("Entregado", "E");
 insert into tipo_documento_cliente(nombre, siglas) values ("DNI", "D");
 insert into tipo_documento_cliente(nombre, siglas) values ("NIE", "N");
 insert into tipo_documento_cliente(nombre, siglas) values ("Nº Pasaporte", "P");
@@ -80,6 +84,4 @@ insert into categoria_categorias_hijas values ("3", "7");
 insert into categoria_categorias_hijas values ("4", "7");
 insert into categoria_categorias_hijas values ("5", "8");
 
-insert into producto(codigo, cantidad_almacen, comentarios, descripcion, descuento, en_oferta, es_novedad, gasto_acumulado, marca, modelo, precio, umbral_oculto_tienda, umbral_solicitud_proveedor, unidades_venedidas, valoracion_producto)
-values("1", 100, "Es una katana", "Uchigatana", 0.0, false, true, 150.50, "Dark", "Souls", 75.25, 3, 6, 2, 5);
-insert into producto_categorias(producto_codigo, categorias_codigo) values ("1", "3");
+insert into aviso(descripcion, urgencia_aviso, fecha_creacion) values ("prueba", "Alta", "2001-12-09");

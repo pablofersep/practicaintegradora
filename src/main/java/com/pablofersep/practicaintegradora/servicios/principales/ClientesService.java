@@ -14,4 +14,5 @@ public interface ClientesService {
      * @return Cliente si ha podido insertarse/modificarse. Nulo en caso de que haya alguna excepcion
      */
     Cliente crear_modificar(Cliente c);
+    Cliente findById(String email);
 }

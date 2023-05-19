@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class Pedido {
     @Column(name = "fecha_realizacion")
     private LocalDate fechaRealizacion;
     @ElementCollection
-    private Set<LineaPedido> lineasPedido;
+    private Set<LineaPedido> lineasPedido = new HashSet<>();
     @Column(name = "precio_total")
     private BigDecimal precioTotal;
     @ManyToOne

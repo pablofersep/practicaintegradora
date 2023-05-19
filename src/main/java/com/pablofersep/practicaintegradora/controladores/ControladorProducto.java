@@ -4,6 +4,8 @@ import com.pablofersep.practicaintegradora.constantes.Constantes;
 import com.pablofersep.practicaintegradora.entidades.auxiliares.Auditoria;
 import com.pablofersep.practicaintegradora.entidades.principales.Producto;
 import com.pablofersep.practicaintegradora.formobjects.producto.CreacionProducto;
+import com.pablofersep.practicaintegradora.servicios.datos.UrgenciaAvisoService;
+import com.pablofersep.practicaintegradora.servicios.principales.AvisoService;
 import com.pablofersep.practicaintegradora.servicios.principales.CategoriaService;
 import com.pablofersep.practicaintegradora.servicios.principales.ProductoService;
 import jakarta.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,6 +31,10 @@ public class ControladorProducto {
     private ProductoService productoService;
     @Autowired
     private CategoriaService categoriaService;
+    @Autowired
+    private AvisoService avisoService;
+    @Autowired
+    private UrgenciaAvisoService urgenciaAvisoService;
 
     @ModelAttribute
     public void anadirListas(Model m) {
@@ -73,14 +80,18 @@ public class ControladorProducto {
     @GetMapping(value = "/modificar/{id}")
     public ModelAndView modificarProducto(
             @PathVariable("id") String id,
-            RedirectAttributes redirect
+            RedirectAttributes redirect,
+            HttpSession sesion
     ) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("layout");
-        mav.addObject("ruta", "/producto/alta_modifica");
+        mav.addObject("ruta", "/producto/modifica");
+        mav.addObject("action", "/producto/modificar/"+id);
         Producto producto = productoService.findProductoByCodigo(id);
+        CreacionProducto cp = new CreacionProducto();
         if (producto != null) {
-            mav.addObject("producto", producto);
+            cp.bind(producto);
+            mav.addObject("creacionProducto", cp);
         } else {
             redirect.addAttribute("mensaje", "No existe producto con codigo " + id);
             mav.setViewName("redirect:/producto/listado");
@@ -92,22 +103,40 @@ public class ControladorProducto {
     public ModelAndView modificarProductoPost(
             @PathVariable("id") String id,
             RedirectAttributes redirect,
-            @Valid @ModelAttribute("producto") CreacionProducto formObj,
+            @Valid @ModelAttribute("creacionProducto") CreacionProducto formObj,
             BindingResult errores,
             HttpSession sesion
     ) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("producto", formObj);
-        mav.addObject("ruta", "/modificar/"+id);
-        mav.setViewName("layout");
-        if (errores.hasErrors()) return mav;
-
-        Producto producto = productoService.findProductoByCodigo(id);
-        if (producto != null) {
-
-        } else {
-            redirect.addAttribute("mensaje", "No se pudo actualizar el producto con id: " + id);
+        if (errores.hasErrors()) {
+            mav.addObject("creacionProducto", formObj);
+            mav.addObject("action", "/producto/modificar/"+id);
+            mav.addObject("ruta", "/producto/modifica");
+            mav.setViewName("layout");
+            return mav;
+        }
+        if (!id.equals(formObj.getCodigo()) && productoService.findProductoByCodigo(formObj.getCodigo()) != null ){
+            mav.addObject("creacionProducto", formObj);
+            mav.addObject("action", "/producto/modificar/"+id);
+            mav.addObject("ruta", "/producto/modifica");
+            mav.addObject("productoExistente", "El producto ya existe en la base de datos");
+            mav.setViewName("layout");
+            return mav;
+        }
+        Producto p = productoService.findProductoByCodigo(id);
+        if (p == null) {
+            redirect.addAttribute("mensaje", "No existe producto con codigo " + id);
             mav.setViewName("redirect:/producto/listado");
+            return mav;
+        }
+        p.bind(formObj, categoriaService);
+        p.getAuditoria().setFechaUltimaModificacion(LocalDate.now());
+        Producto comprobacion = productoService.crear_modificar(p);
+        if (comprobacion == null){
+            redirect.addAttribute("mensaje", "No se ha podido crear el producto");
+        }else{
+            ControladorAviso.creacionAviso(p, productoService, urgenciaAvisoService, avisoService);
+            redirect.addAttribute("mensaje", "Modificacion de producto exitosa");
         }
         mav.setViewName("redirect:/producto/listado");
         return mav;
@@ -136,29 +165,24 @@ public class ControladorProducto {
             mav.setViewName("layout");
             return mav;
         }
+        if (productoService.findProductoByCodigo(formObj.getCodigo()) != null){
+            mav.addObject("creacionProducto", formObj);
+            mav.addObject("ruta", "/producto/alta");
+            mav.setViewName("layout");
+            mav.addObject("productoExistente", "El producto ya existe en la base de datos");
+            return mav;
+        }
 
         Producto p = new Producto();
-        p.setCodigo(formObj.getCodigo());
-        p.setDescripcion(formObj.getDescripcion());
-        p.setPrecio(BigDecimal.valueOf(Float.parseFloat(formObj.getPrecio())));
-        p.setCantidadAlmacen(Integer.parseInt(formObj.getCantidadAlmacen()));
-        p.setUmbralOcultoEnTienda(Integer.parseInt(formObj.getUmbralOcultoEnTienda()));
-        p.setUmbralSolicitudProveedor(Integer.parseInt(formObj.getUmbralSolicitudProveedor()));
-        p.setCategorias(categoriaService.categoriasPorCodigos(formObj.getCategorias()));
-        p.setEnOferta(formObj.getEnOferta());
-        p.setEsNovedad(formObj.getEsNovedad());
-        p.setDescuento(BigDecimal.valueOf(Float.parseFloat(formObj.getDescuento())));
-        p.setMarca(formObj.getMarca());
-        p.setModelo(formObj.getModelo());
-        p.setComentarios(formObj.getComentarios());
+        p.bind(formObj, categoriaService);
 
         Auditoria auditoria = new Auditoria();
         auditoria.setFechaAltaEntidad(LocalDateTime.now().toLocalDate());
         auditoria.setFechaUltimaModificacion(LocalDateTime.now().toLocalDate());
         auditoria.setFechaBorradoEntidad(null);
         auditoria.setFechaFinalBloqueo(Constantes.MIN_MYSQL_DATE);
+        //añadir usuario que lo modifica
         p.setAuditoria(auditoria);
-
         Producto comprobacion = productoService.crear_modificar(p);
         if (comprobacion == null){
             redirect.addAttribute("mensaje", "No se ha podido crear el producto");

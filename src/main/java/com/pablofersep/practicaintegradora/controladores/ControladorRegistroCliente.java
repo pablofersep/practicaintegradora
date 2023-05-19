@@ -3,6 +3,7 @@ package com.pablofersep.practicaintegradora.controladores;
 import com.pablofersep.practicaintegradora.constantes.Constantes;
 import com.pablofersep.practicaintegradora.entidades.auxiliares.Auditoria;
 import com.pablofersep.practicaintegradora.entidades.auxiliares.Direccion;
+import com.pablofersep.practicaintegradora.entidades.principales.Carrito;
 import com.pablofersep.practicaintegradora.entidades.principales.Cliente;
 import com.pablofersep.practicaintegradora.entidades.principales.Usuario;
 import com.pablofersep.practicaintegradora.formobjects.cliente.RegistroClienteDatosContacto;
@@ -10,6 +11,7 @@ import com.pablofersep.practicaintegradora.formobjects.cliente.RegistroClienteDa
 import com.pablofersep.practicaintegradora.formobjects.cliente.RegistroClienteDatosCliente;
 import com.pablofersep.practicaintegradora.repositorios.datos.*;
 import com.pablofersep.practicaintegradora.servicios.datos.TipoClienteService;
+import com.pablofersep.practicaintegradora.servicios.principales.CarritoService;
 import com.pablofersep.practicaintegradora.servicios.principales.CategoriaService;
 import com.pablofersep.practicaintegradora.servicios.principales.ClientesService;
 import com.pablofersep.practicaintegradora.servicios.principales.UsuarioService;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Controller
@@ -45,6 +48,8 @@ public class ControladorRegistroCliente {
     private UsuarioService usuarioService;
     @Autowired
     private CategoriaService categoriaService;
+    @Autowired
+    private CarritoService carritoService;
 
     private Usuario user;
     private Cliente cliente = new Cliente();
@@ -58,6 +63,7 @@ public class ControladorRegistroCliente {
         m.addAttribute("paises", paisRepository.findAll());
         m.addAttribute("vias", tipoViaRepository.findAll());
         m.addAttribute("documentos", tipoDocumentoClienteRepository.findAll());
+        m.addAttribute("categorias", categoriaService.findAll());
     }
 
     @GetMapping(value = "/datos_personales")
@@ -143,7 +149,7 @@ public class ControladorRegistroCliente {
         Direccion direccion = new Direccion();
         direccion.setNombre(formObj.getNombreDireccion());
         direccion.setTipoVia(formObj.getTipoVia());
-        direccion.setNumero(formObj.getNumero());
+        direccion.setNumero(Integer.parseInt(formObj.getNumero()));
         direccion.setPortal(formObj.getPortal());
         direccion.setPlanta(formObj.getPlanta());
         direccion.setPuerta(formObj.getPuerta());
@@ -208,6 +214,7 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
+        System.out.println(step);
         if (step == null || step.equals("1") || step.equals("2") || step.equals("3")) {
             mav.setViewName("redirect:/registro/cliente/datos_cliente");
             return mav;
@@ -241,10 +248,23 @@ public class ControladorRegistroCliente {
         cliente.setId(user.getEmail());
         cliente.setGastoAcumuladoCliente(BigDecimal.valueOf(0));
         cliente.setTipoCliente(tipoClienteService.tipoClienteEnFuncionGasto(cliente));
+
         Cliente comprobacion1 = clientesService.crear_modificar(cliente);
         if (comprobacion1 == null) {
             redirect.addAttribute("mensaje", "No se ha podido insertar el cliente en la BBDD");
+            mav.setViewName("redirect:/cliente/listado");
+            return mav;
         }
+        Carrito carrito = new Carrito();
+        carrito.setFechaCreacion(LocalDate.now());
+        carrito.setCliente(comprobacion1);
+        Carrito comprobacion2 = carritoService.crear_modificar(carrito);
+        if (comprobacion2 == null) {
+            redirect.addAttribute("mensaje", "No se ha podido crear el carrito del cliente en la BBDD");
+            mav.setViewName("redirect:/cliente/listado");
+            return mav;
+        }
+        redirect.addAttribute("mensaje", "Creacion de cliente y su carrito correctamente");
         mav.setViewName("redirect:/cliente/listado");
         return mav;
     }

@@ -45,4 +45,9 @@ public class ClientesServiceImplementacion implements ClientesService {
             return null;
         }
     }
+
+    @Override
+    public Cliente findById(String email) {
+        return clientesRepository.findClienteById(email);
+    }
 }

@@ -148,10 +148,9 @@ public class ControladorLogin {
         sesion.invalidate();
         Cookie[] cookies = solicitud.getCookies();
         for (Cookie cookie : cookies){
-            if (cookie.getName().equals("usuario") | cookie.getName().equals("clave"))respuesta.addCookie(new Cookie(cookie.getName(),""));
+            if (cookie.getName().equals("cookieUsuario") | cookie.getName().equals("cookieClave"))respuesta.addCookie(new Cookie(cookie.getName(),""));
         }
-        mav.addObject("ruta", "/cliente/listado");//redireccionar a la pagina en la que te encuentras
-        mav.setViewName("layout");
+        mav.setViewName("redirect:/cliente/listado");
         return mav;
     }
     private void actualizarUsuario() {

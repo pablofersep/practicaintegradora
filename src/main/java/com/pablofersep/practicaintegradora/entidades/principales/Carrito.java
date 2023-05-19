@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -23,10 +24,10 @@ public class Carrito {
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
     @ElementCollection
-    private Set<LineaCarrito> lineasCarrito;
+    private Set<LineaCarrito> lineasCarrito = new HashSet<>();
     @Column
     private BigDecimal precio;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_cliente_carrito"))
     private Cliente cliente;
 

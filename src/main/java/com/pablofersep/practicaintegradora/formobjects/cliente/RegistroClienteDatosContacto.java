@@ -33,7 +33,7 @@ public class RegistroClienteDatosContacto {
     @NotNull
     @NotBlank
     @Pattern(regexp = "[0-9]{1,}")
-    private Integer numero;
+    private String numero;
     private String portal;
     @Pattern(regexp = "[0-9]{1,}")
     private String planta;
@@ -44,6 +44,7 @@ public class RegistroClienteDatosContacto {
     private String region;
     @NotNull
     @NotBlank
+    @Pattern(regexp = "[0-9]{1,}")
     private String codigoPostal;
 
 }

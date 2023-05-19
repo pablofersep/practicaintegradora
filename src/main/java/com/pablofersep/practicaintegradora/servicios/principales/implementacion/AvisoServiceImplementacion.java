@@ -34,7 +34,7 @@ public class AvisoServiceImplementacion implements AvisoService {
 
     @Override
     public List<Aviso> findAll() {
-        return avisoRepository.findAll();
+        return avisoRepository.findAllByOrderByFechaCreacion();
     }
 
     @Override
