@@ -21,6 +21,7 @@ public class CategoriaServiceImplementacion implements CategoriaService {
 
     @Override
     public boolean existenCategorias(List<String> codigos) {
+        if (codigos == null) return true;
         for(String s : codigos){
             if (findByCodigo(s) == null){
                 return false;
@@ -32,6 +33,7 @@ public class CategoriaServiceImplementacion implements CategoriaService {
     @Override
     public Set<Categoria> categoriasPorCodigos(List<String> codigos) {
         Set<Categoria> categorias = new HashSet<>();
+        if (codigos == null) return categorias;
         for(String s : codigos){
             categorias.add(findByCodigo(s));
         }

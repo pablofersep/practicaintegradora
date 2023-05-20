@@ -150,7 +150,11 @@ public class ControladorLogin {
         sesion.invalidate();
         Cookie[] cookies = solicitud.getCookies();
         for (Cookie cookie : cookies){
-            if (cookie.getName().equals("cookieUsuario") | cookie.getName().equals("cookieClave"))respuesta.addCookie(new Cookie(cookie.getName(),""));
+            if (cookie.getName().equals("cookieUsuario") | cookie.getName().equals("cookieClave")){
+                Cookie temp = new Cookie(cookie.getName(),"");
+                temp.setDomain("/");
+                respuesta.addCookie(temp);
+            }
         }
         mav.setViewName("redirect:/cliente/listado");
         return mav;

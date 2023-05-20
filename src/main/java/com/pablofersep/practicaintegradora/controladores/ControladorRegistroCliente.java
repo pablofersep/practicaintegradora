@@ -118,7 +118,8 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
-        if (step == null || step.equals("1")) {
+        System.out.println(step);
+        if (step == null || step.isEmpty() || step.equals("1")) {
             mav.setViewName("redirect:/registro/cliente/datos_personales");
             return mav;
         }
@@ -138,7 +139,7 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
-        if (step == null || step.equals("1")) {
+        if (step == null || step.isEmpty() || step.equals("1")) {
             mav.setViewName("redirect:/registro/cliente/datos_personales");
             return mav;
         }
@@ -175,7 +176,7 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
-        if (step == null || step.equals("1") || step.equals("2")) {
+        if (step == null || step.isEmpty() || step.equals("1") || step.equals("2")) {
             mav.setViewName("redirect:/registro/cliente/datos_contacto");
             return mav;
         }
@@ -195,7 +196,7 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
-        if (step == null || step.equals("1") || step.equals("2")) {
+        if (step == null || step.isEmpty() || step.equals("1") || step.equals("2")) {
             mav.setViewName("redirect:/registro/cliente/datos_contacto");
             return mav;
         }
@@ -221,7 +222,7 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
-        if (step == null || step.equals("1") || step.equals("2") || step.equals("3")) {
+        if (step == null || step.isEmpty() || step.equals("1") || step.equals("2") || step.equals("3")) {
             mav.setViewName("redirect:/registro/cliente/datos_cliente");
             return mav;
         }
@@ -239,7 +240,7 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
-        if (step == null || step.equals("1") || step.equals("2") || step.equals("3")) {
+        if (step == null || step.isEmpty() || step.equals("1") || step.equals("2") || step.equals("3")) {
             mav.setViewName("redirect:/registro/cliente/datos_cliente");
             return mav;
         }
