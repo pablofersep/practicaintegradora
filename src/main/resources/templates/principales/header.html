@@ -1,1 +1,7 @@
-<h2 th:text="${usuario}"></h2>
+<div th:if="${nombreUsuario}==null">
+    <a href="http://localhost:8080/login/admin">Login</a>
+</div>
+<div th:if="${nombreUsuario}!=null">
+    <p>Hola, <th:block th:text="${nombreUsuario}"/>, has visitado <th:block th:text="${conteo}"/> páginas</p>
+    <a href="http://localhost:8080/login/desconectar">Logout</a>
+</div>

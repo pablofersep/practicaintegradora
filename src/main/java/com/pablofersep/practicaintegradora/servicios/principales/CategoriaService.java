@@ -9,6 +9,6 @@ public interface CategoriaService {
     Categoria findByCodigo(String codigo);
     boolean existenCategorias(List<String> codigos);
     Set<Categoria> categoriasPorCodigos(List<String> codigos);
-
+    Categoria crear_modificar(Categoria c);
     List<Categoria> findAll();
 }

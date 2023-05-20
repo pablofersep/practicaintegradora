@@ -7,10 +7,17 @@ import com.pablofersep.practicaintegradora.servicios.principales.CarritoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CarritoServiceImplementacion implements CarritoService {
     @Autowired
     private CarritoRepository carritoRepository;
+
+    @Override
+    public List<Carrito> findAll() {
+        return carritoRepository.findAll();
+    }
 
     @Override
     public Carrito findCarritoByEmailCliente(String cliente) {

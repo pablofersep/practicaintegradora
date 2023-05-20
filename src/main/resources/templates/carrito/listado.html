@@ -1,0 +1,19 @@
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Fecha De Creacion</div>
+        <div class="cell bold">Precio Acumulado</div>
+        <div class="cell bold">Cliente</div>
+        <div class="cell bold">Productos</div>
+    </div>
+    <div class="row" th:each="carrito : ${carritos}">
+        <div class="cell" th:text="${carrito.fechaCreacion}"></div>
+        <div class="cell" th:text="${carrito.precio}"></div>
+        <div class="cell" th:text="${carrito.cliente.id}"></div>
+        <div class="cell">
+            <li th:each="linea : *{carrito.lineasCarrito}">
+                <th:block th:text="${linea.producto.descripcion}"></th:block> -- <th:block th:text="${linea.unidades}"></th:block>
+            </li>
+        </div>
+    </div>
+</div>

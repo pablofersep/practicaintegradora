@@ -6,10 +6,18 @@ import com.pablofersep.practicaintegradora.servicios.principales.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PedidoServiceImplementacion implements PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Override
+    public List<Pedido> findAll() {
+        return pedidoRepository.findAll();
+    }
+
     @Override
     public Pedido crear_modificar(Pedido pedido) {
         try{

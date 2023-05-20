@@ -1,0 +1,17 @@
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Fecha Realizdo</div>
+        <div class="cell bold">Precio Total</div>
+        <div class="cell bold">Cliente</div>
+        <div class="cell bold">Estado</div>
+        <div class="cell bold">Pasar de Estado</div>
+    </div>
+    <div class="row" th:each="pedido : ${pedidos}">
+        <div class="cell" th:text="${pedido.fechaRealizacion}"></div>
+        <div class="cell" th:text="${pedido.precioTotal}"></div>
+        <div class="cell" th:text="${pedido.cliente.id}"></div>
+        <div class="cell" th:text="${pedido.estadoPedido}"></div>
+        <div class="cell"><a th:href="|http://localhost:8080/pedido/siguiente_estado/${pedido.id}|">Siguiente</a></div>
+    </div>
+</div>

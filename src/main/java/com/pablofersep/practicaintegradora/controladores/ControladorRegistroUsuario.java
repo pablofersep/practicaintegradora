@@ -5,6 +5,7 @@ import com.pablofersep.practicaintegradora.entidades.auxiliares.Auditoria;
 import com.pablofersep.practicaintegradora.entidades.principales.Usuario;
 import com.pablofersep.practicaintegradora.formobjects.usuario.RegistroUsuario;
 import com.pablofersep.practicaintegradora.repositorios.principales.UsuarioRepository;
+import com.pablofersep.practicaintegradora.servicios.principales.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ import java.time.LocalDateTime;
 public class ControladorRegistroUsuario {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
     @GetMapping(value = "/usuario")
     public ModelAndView registrarUsuario(
             HttpServletResponse respuesta,
@@ -60,7 +61,7 @@ public class ControladorRegistroUsuario {
         user.setNumeroAccesos(0);
         user.setAuditoria(auditoria);
 
-        Usuario comprobacionUser = usuarioRepository.save(user);
+        Usuario comprobacionUser = usuarioService.crear_modificar(user);
 
         if (comprobacionUser ==  null){
             redirect.addAttribute("mensaje", "Ha habido un error al crear el usuario, intentelo de nuevo por favor");

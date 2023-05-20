@@ -1,0 +1,17 @@
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Nombre</div>
+        <div class="cell bold">Clase</div>
+        <div class="cell bold">Telefono Movil</div>
+        <div class="cell bold">Telefono Fijo</div>
+        <div class="cell bold">Detalles</div>
+    </div>
+    <div class="row" th:each="proveedor : ${proveedores}">
+        <div class="cell" th:text="${proveedor.nombre}"></div>
+        <div class="cell" th:text="${proveedor.claseProveedor}"></div>
+        <div class="cell" th:text="${proveedor.telefonoFijo}"></div>
+        <div class="cell" th:text="${proveedor.telefonoMovil}"></div>
+        <div class="cell"><a th:href="|http://localhost:8080/proveedor/detalle/${proveedor.id}|">Detalles</a></div>
+    </div>
+</div>

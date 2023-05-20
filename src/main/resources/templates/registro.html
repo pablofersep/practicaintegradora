@@ -6,7 +6,7 @@
 <div>
     <select name="locales" id="locales">
         <option value=""></option>
-        <option th:each="pais : ${paises}" th:value="${pais.siglas}" th:text="${pais.nombre}" />
+        <option th:each="idioma : ${idiomas}" th:value="${idioma.siglas}" th:text="${idioma.nombre}" />
     </select>
 </div>
 </body>

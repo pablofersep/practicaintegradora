@@ -1,0 +1,15 @@
+<div class="red" th:text="${mensaje}"></div>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Proveedor</div>
+        <div class="cell bold">Fecha Inicio</div>
+        <div class="cell bold">Fecha Fin</div>
+        <div class="cell bold">Detalles</div>
+    </div>
+    <div class="row" th:each="catalogo : ${catalogos}">
+        <div class="cell" th:text="${catalogo.proveedor.nombre}"></div>
+        <div class="cell" th:text="${catalogo.periodo.fechaInicio}"></div>
+        <div class="cell" th:text="${catalogo.periodo.fechaFin}"></div>
+        <div class="cell"><a th:href="|http://localhost:8080/catalogo/detalle/${catalogo.id}|">Detalles</a></div>
+    </div>
+</div>

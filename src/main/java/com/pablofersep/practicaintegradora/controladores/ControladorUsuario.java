@@ -1,9 +1,8 @@
 package com.pablofersep.practicaintegradora.controladores;
 
 import com.pablofersep.practicaintegradora.constantes.Constantes;
-import com.pablofersep.practicaintegradora.entidades.principales.Producto;
 import com.pablofersep.practicaintegradora.entidades.principales.Usuario;
-import com.pablofersep.practicaintegradora.repositorios.principales.UsuarioRepository;
+import com.pablofersep.practicaintegradora.servicios.principales.UsuarioService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,17 +24,27 @@ import java.util.List;
 public class ControladorUsuario {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
     @GetMapping(value = "/detalle/{id}")
     public ModelAndView detalleUsuario(
             @PathVariable("id") String id,
-            RedirectAttributes redirect
+            RedirectAttributes redirect,
+            HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("layout");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            mav.addObject("ruta", "noSesion");
+            return mav;
+        }else {
+            sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
+        }
         mav.addObject("ruta", "/usuario/detalle");
-        Usuario usuario = usuarioRepository.findByEmailEquals(id);
+        Usuario usuario = usuarioService.findByEmailEquals(id);
         if (usuario != null){
             mav.addObject("usuario", usuario);
         }else{
@@ -52,16 +61,18 @@ public class ControladorUsuario {
     ){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("layout");
-        Usuario u = (Usuario)sesion.getAttribute("admin");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
         if (u == null){
             mav.addObject("ruta", "noSesion");
             return mav;
         }else {
             sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
         }
         mav.addObject("ruta", "/usuario/listado");
         mav.addObject("mensaje", mensaje);
-        List<Usuario> usuarios = usuarioRepository.findAll();
+        List<Usuario> usuarios = usuarioService.findAll();
         if (usuarios != null){
             mav.addObject("usuarios", usuarios);
         }if (usuarios.size() == 0){
@@ -73,38 +84,48 @@ public class ControladorUsuario {
     @GetMapping(value = "/baja/{id}")
     public ModelAndView bajaUsuario(
             @PathVariable("id") String id,
-            RedirectAttributes redirect
+            RedirectAttributes redirect,
+            HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
-        Usuario user = usuarioRepository.findByEmailEquals(id);
+        mav.setViewName("redirect:/usuario/listado");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            return mav;
+        }
+        Usuario user = usuarioService.findByEmailEquals(id);
         user.getAuditoria().setFechaBorradoEntidad(LocalDateTime.now().toLocalDate());
         user.getAuditoria().setFechaUltimaModificacion(LocalDateTime.now().toLocalDate());
-        Usuario comprobacion = usuarioRepository.save(user);
+        Usuario comprobacion = usuarioService.crear_modificar(user);
         if (comprobacion==null){
             redirect.addAttribute("mensaje", "Baja inexitoso del usuario " + id);
         }else {
             redirect.addAttribute("mensaje", "Baja exitoso del usuario " + id);
         }
-        mav.setViewName("redirect:/usuario/listado");
         return mav;
     }
 
     @GetMapping(value = "/alta/{id}")
     public ModelAndView rehabilitarUsuario(
             @PathVariable("id") String id,
-            RedirectAttributes redirect
+            RedirectAttributes redirect,
+            HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
-        Usuario user = usuarioRepository.findByEmailEquals(id);
+        mav.setViewName("redirect:/usuario/listado");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            return mav;
+        }
+        Usuario user = usuarioService.findByEmailEquals(id);
         user.getAuditoria().setFechaBorradoEntidad(null);
         user.getAuditoria().setFechaUltimaModificacion(LocalDateTime.now().toLocalDate());
-        Usuario comprobacion = usuarioRepository.save(user);
+        Usuario comprobacion = usuarioService.crear_modificar(user);
         if (comprobacion==null){
             redirect.addAttribute("mensaje", "Alta inexitoso del usuario " + id);
         }else {
             redirect.addAttribute("mensaje", "Alta exitoso del usuario " + id);
         }
-        mav.setViewName("redirect:/usuario/listado");
         return mav;
     }
 
@@ -113,13 +134,14 @@ public class ControladorUsuario {
             @PathVariable("id") String id,
             RedirectAttributes redirect,
             HttpServletResponse respuesta,
-            HttpServletRequest solicitud
+            HttpServletRequest solicitud,
+            HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
-        Usuario user = usuarioRepository.findByEmailEquals(id);
+        Usuario user = usuarioService.findByEmailEquals(id);
         user.getAuditoria().setFechaFinalBloqueo(LocalDateTime.now().toLocalDate().plusDays(1));
         user.getAuditoria().setFechaUltimaModificacion(LocalDateTime.now().toLocalDate());
-        Usuario comprobacion = usuarioRepository.save(user);
+        Usuario comprobacion = usuarioService.crear_modificar(user);
         if (comprobacion==null){
             redirect.addAttribute("mensaje", "Bloqueo inexitoso del usuario " + id);
         }else {
@@ -131,26 +153,29 @@ public class ControladorUsuario {
         return mav;
     }
 
-    //Este metodo no tendria ni que existir
-    //O tendria que estar subido en un servidor privado para que no sea accesible desde el exterior
     @GetMapping(value = "/desbloqueo/{id}")
     public ModelAndView desbloqueoUsuario(
             @PathVariable("id") String id,
             RedirectAttributes redirect,
             HttpServletResponse respuesta,
-            HttpServletRequest solicitud
+            HttpServletRequest solicitud,
+            HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
-        Usuario user = usuarioRepository.findByEmailEquals(id);
+        mav.setViewName("redirect:/usuario/listado");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            return mav;
+        }
+        Usuario user = usuarioService.findByEmailEquals(id);
         user.getAuditoria().setFechaFinalBloqueo(Constantes.MIN_MYSQL_DATE);
         user.getAuditoria().setFechaUltimaModificacion(LocalDateTime.now().toLocalDate());
-        Usuario comprobacion = usuarioRepository.save(user);
+        Usuario comprobacion = usuarioService.crear_modificar(user);
         if (comprobacion==null){
             redirect.addAttribute("mensaje", "Desbloqueo inexitoso del usuario " + id);
         }else {
             redirect.addAttribute("mensaje", "Desbloqueo exitoso del usuario " + id);
         }
-        mav.setViewName("redirect:/usuario/listado");
         return mav;
     }
 

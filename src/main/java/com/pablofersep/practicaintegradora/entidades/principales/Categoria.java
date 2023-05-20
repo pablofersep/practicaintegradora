@@ -19,11 +19,10 @@ public class Categoria {
     private String codigo;
     @Column
     private String descripcion;
-    @ManyToOne
-    @JoinColumn(name = "categoria_padre", foreignKey = @ForeignKey(name = "FK_categoria_padre"))
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private Categoria categoriaPadre;
-    @ManyToMany
-    private Set<Categoria> categoriasHijas = new HashSet<>();
+    @OneToMany(mappedBy = "categoriaPadre")
+    private Set<Categoria> categoriasHijas;
     @Embedded
     private Auditoria auditoria;
 

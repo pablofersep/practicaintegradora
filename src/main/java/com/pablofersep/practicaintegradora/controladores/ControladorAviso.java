@@ -28,10 +28,20 @@ public class ControladorAviso {
 
     @GetMapping(value = "/listado")
     public ModelAndView listadoCategoria(
-            @RequestParam(required = false) String mensaje
+            @RequestParam(required = false) String mensaje,
+            HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("layout");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            mav.addObject("ruta", "noSesion");
+            return mav;
+        }else {
+            sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
+        }
         mav.addObject("ruta", "/aviso/listado");
         mav.addObject("mensaje", mensaje);
         List<Aviso> avisos = avisoService.findAll();
@@ -46,10 +56,15 @@ public class ControladorAviso {
     @GetMapping(value = "/procesar/{id}")
     public ModelAndView procesarAviso(
             @PathVariable("id") String id,
-            RedirectAttributes redirect
+            RedirectAttributes redirect,
+            HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("redirect:/aviso/listado");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            return mav;
+        }
         Aviso aviso = avisoService.findById(Long.parseLong(id));
         if (aviso != null){
             aviso.setFechaProcesado(LocalDate.now());

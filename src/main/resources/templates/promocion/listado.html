@@ -1,0 +1,23 @@
+<div class="red" th:text="${mensaje}"></div>
+<a th:href="|http://localhost:8080/promocion/crear|">Nueva Promocion</a>
+<a th:href="|http://localhost:8080/promocion/eliminar|">Eliminar Promociones</a>
+<div class="table">
+    <div class="row">
+        <div class="cell bold">Descripcion</div>
+        <div class="cell bold">Descuento</div>
+        <div class="cell bold">Fecha Inicio</div>
+        <div class="cell bold">Fecha Fin</div>
+        <div class="cell bold">Productos</div>
+    </div>
+    <div class="row" th:each="promocion : ${promociones}">
+        <div class="cell" th:text="${promocion.descripcion}"></div>
+        <div class="cell" th:text="${promocion.descuento}"></div>
+        <div class="cell" th:text="${promocion.periodo.fechaInicio}"></div>
+        <div class="cell" th:text="${promocion.periodo.fechaFinal}"></div>
+        <div class="cell">
+            <li th:each="producto : *{promocion.productos}">
+                <th:block th:text="${producto.descripcion}"></th:block>
+            </li>
+        </div>
+    </div>
+</div>

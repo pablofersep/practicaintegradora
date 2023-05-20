@@ -1,7 +1,7 @@
 package com.pablofersep.practicaintegradora.controladores;
 
 import com.pablofersep.practicaintegradora.entidades.principales.Usuario;
-import com.pablofersep.practicaintegradora.repositorios.principales.UsuarioRepository;
+import com.pablofersep.practicaintegradora.servicios.principales.UsuarioService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,10 +19,7 @@ import java.time.LocalDateTime;
 public class ControladorLogin {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    private Usuario user;
-    private int conteo;
+    private UsuarioService usuarioService;
 
     @RequestMapping(value = "/usuario", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView usuario(
@@ -30,30 +27,33 @@ public class ControladorLogin {
             @RequestParam(required = false) String mensaje,
             @CookieValue(defaultValue = "-1") String cookieUsuario,
             HttpServletResponse respuesta,
-            HttpServletRequest solicitud
+            HttpServletRequest solicitud,
+            HttpSession sesion
     ) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("mensaje", mensaje);
-        conteo = 0;
-
-        user = usuarioRepository.findByEmailEquals(cookieUsuario);
+        sesion.setAttribute("intentos", 0);
+        Usuario user;
+        user = usuarioService.findByEmailEquals(cookieUsuario);
         if (user != null &&
                 cookieUsuario.equals(user.getEmail()) &&
                 (user.getAuditoria().getFechaBorradoEntidad() == null &
                         user.getAuditoria().getFechaFinalBloqueo().isBefore(LocalDate.now()))
         ) {
             mav.setViewName("redirect:/login/clave");
+            sesion.setAttribute("usuario", user);
             return mav;
         }
 
         if (usuario != null) {
-            user = usuarioRepository.findByEmailEquals(usuario);
+            user = usuarioService.findByEmailEquals(usuario);
             if (user != null) {
                 if (user.getAuditoria().getFechaBorradoEntidad() == null) {
                     if (user.getAuditoria().getFechaFinalBloqueo().isBefore(LocalDate.now())) {
                         Cookie cookie = new Cookie("cookieUsuario", user.getEmail());
                         cookie.setPath("/");
                         respuesta.addCookie(cookie);
+                        sesion.setAttribute("usuario", user);
                         mav.setViewName("redirect:/login/clave");
                         return mav;
                     }else {
@@ -80,6 +80,8 @@ public class ControladorLogin {
             HttpSession sesion
     ) {
         ModelAndView mav = new ModelAndView();
+        int intentos = (int)sesion.getAttribute("intentos");
+        Usuario user = (Usuario)sesion.getAttribute("usuario");
         if (user == null) {
             mav.setViewName("redirect:/login/usuario");
             return mav;
@@ -89,7 +91,7 @@ public class ControladorLogin {
         mav.setViewName("login");
 
         if (cookieClave.equals(user.getClave())) {
-            actualizarUsuario();
+            actualizarUsuario(user);
             mav.setViewName("redirect:/cliente/listado");//redireccionar a vue
             sesion.setAttribute("usuario", user);
             return mav;
@@ -100,16 +102,16 @@ public class ControladorLogin {
                 Cookie cookie = new Cookie("cookieClave", clave);
                 cookie.setPath("/");
                 respuesta.addCookie(cookie);
-                actualizarUsuario();
+                actualizarUsuario(user);
                 mav.setViewName("redirect:/clientes/listado");//redireccionar a vue
                 sesion.setAttribute("usuario", user);
                 return mav;
             } else {
-                conteo++;
+                intentos++;
                 mav.addObject("error", "La pareja usuario-clave no coincide");
             }
         }
-        if (conteo == 3) {
+        if (intentos == 3) {
             mav.setViewName("redirect:/user/bloqueo/" + user.getEmail());
             return mav;
         }
@@ -132,7 +134,7 @@ public class ControladorLogin {
         Usuario usuario1 = new Usuario();
         usuario1.setEmail(usuario);
         usuario1.setClave(usuario);
-        sesion.setAttribute("admin", usuario1);
+        sesion.setAttribute("usuario", usuario1);
         sesion.setAttribute("conteo", 0);
         mav.setViewName("redirect:/cliente/listado");
         return mav;
@@ -153,9 +155,9 @@ public class ControladorLogin {
         mav.setViewName("redirect:/cliente/listado");
         return mav;
     }
-    private void actualizarUsuario() {
+    private void actualizarUsuario(Usuario user) {
         user.setNumeroAccesos(user.getNumeroAccesos() + 1);
         user.setFechaUltimaConexion(LocalDateTime.now().toLocalDate());
-        usuarioRepository.save(user);
+        usuarioService.crear_modificar(user);
     }
 }

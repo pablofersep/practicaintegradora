@@ -39,6 +39,15 @@ public class CategoriaServiceImplementacion implements CategoriaService {
     }
 
     @Override
+    public Categoria crear_modificar(Categoria c) {
+        try{
+            return categoriaRepository.save(c);
+        }catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public List<Categoria> findAll() {
         return categoriaRepository.findAll();
     }

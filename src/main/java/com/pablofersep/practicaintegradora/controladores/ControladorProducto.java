@@ -3,6 +3,7 @@ package com.pablofersep.practicaintegradora.controladores;
 import com.pablofersep.practicaintegradora.constantes.Constantes;
 import com.pablofersep.practicaintegradora.entidades.auxiliares.Auditoria;
 import com.pablofersep.practicaintegradora.entidades.principales.Producto;
+import com.pablofersep.practicaintegradora.entidades.principales.Usuario;
 import com.pablofersep.practicaintegradora.formobjects.producto.CreacionProducto;
 import com.pablofersep.practicaintegradora.servicios.datos.UrgenciaAvisoService;
 import com.pablofersep.practicaintegradora.servicios.principales.AvisoService;
@@ -44,10 +45,20 @@ public class ControladorProducto {
     @GetMapping(value = "/detalle/{id}")
     public ModelAndView detalleProducto(
             @PathVariable("id") String id,
-            RedirectAttributes redirect
+            RedirectAttributes redirect,
+            HttpSession sesion
     ) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("layout");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            mav.addObject("ruta", "noSesion");
+            return mav;
+        }else {
+            sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
+        }
         mav.addObject("ruta", "/producto/detalle");
         Producto producto = productoService.findProductoByCodigo(id);
         if (producto != null) {
@@ -61,10 +72,20 @@ public class ControladorProducto {
 
     @GetMapping(value = "/listado")
     public ModelAndView listadoProducto(
-            @RequestParam(required = false) String mensaje
+            @RequestParam(required = false) String mensaje,
+            HttpSession sesion
     ) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("layout");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            mav.addObject("ruta", "noSesion");
+            return mav;
+        }else {
+            sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
+        }
         mav.addObject("ruta", "/producto/listado");
         mav.addObject("mensaje", mensaje);
         List<Producto> productos = productoService.findAll();
@@ -85,6 +106,15 @@ public class ControladorProducto {
     ) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("layout");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            mav.addObject("ruta", "noSesion");
+            return mav;
+        }else {
+            sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
+        }
         mav.addObject("ruta", "/producto/modifica");
         mav.addObject("action", "/producto/modificar/"+id);
         Producto producto = productoService.findProductoByCodigo(id);
@@ -108,11 +138,20 @@ public class ControladorProducto {
             HttpSession sesion
     ) {
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("layout");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            mav.addObject("ruta", "noSesion");
+            return mav;
+        }else {
+            sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
+        }
         if (errores.hasErrors()) {
             mav.addObject("creacionProducto", formObj);
             mav.addObject("action", "/producto/modificar/"+id);
             mav.addObject("ruta", "/producto/modifica");
-            mav.setViewName("layout");
             return mav;
         }
         if (!id.equals(formObj.getCodigo()) && productoService.findProductoByCodigo(formObj.getCodigo()) != null ){
@@ -143,12 +182,23 @@ public class ControladorProducto {
     }
 
     @GetMapping(value = "/crear")
-    public ModelAndView crearProducto(){
+    public ModelAndView crearProducto(
+            HttpSession sesion
+    ){
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("layout");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            mav.addObject("ruta", "noSesion");
+            return mav;
+        }else {
+            sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
+        }
         CreacionProducto creacionProducto = new CreacionProducto();
         mav.addObject("creacionProducto", creacionProducto);
         mav.addObject("ruta", "/producto/alta");
-        mav.setViewName("layout");
         return mav;
     }
     @PostMapping(value = "/crear")
@@ -159,10 +209,19 @@ public class ControladorProducto {
             HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("layout");
+        Usuario u = (Usuario)sesion.getAttribute("usuario");
+        if (u == null){
+            mav.addObject("ruta", "noSesion");
+            return mav;
+        }else {
+            sesion.setAttribute("conteo", ((int)sesion.getAttribute("conteo"))+1);
+            mav.addObject("nombreUsuario", u.getEmail());
+            mav.addObject("conteo", sesion.getAttribute("conteo"));
+        }
         if (errores.hasErrors()){
             mav.addObject("creacionProducto", formObj);
             mav.addObject("ruta", "/producto/alta");
-            mav.setViewName("layout");
             return mav;
         }
         if (productoService.findProductoByCodigo(formObj.getCodigo()) != null){

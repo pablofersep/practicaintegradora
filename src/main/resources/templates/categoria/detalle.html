@@ -14,10 +14,14 @@
     </div>
     <div class="row">
         <div class="cell">Categoria Padre</div>
-        <div class="cell" th:text="*{categoriaPadre}"></div>
+        <div class="cell">
+            <th:block th:if="*{categoriaPadre}!=null"
+                      th:text="*{categoriaPadre.descripcion}"></th:block>
+            <th:block th:if="*{categoriaPadre}==null">No tiene Categoria Padre</th:block>
+        </div>
     </div>
     <div class="row">
-        <div class="cell">Categoria Padre</div>
-        <div class="cell"><li th:each="category : *{categoriasHijas}" th:text="${category}"></li></div>
+        <div class="cell">Categorias Hijas</div>
+        <div class="cell"><li th:each="category : *{categoriasHijas}" th:text="${category.descripcion}"></li></div>
     </div>
 </div>

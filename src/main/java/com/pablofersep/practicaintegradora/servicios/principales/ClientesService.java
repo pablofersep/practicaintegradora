@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ClientesService {
 
+    List<Cliente> findAll();
     List<Cliente> consultaParametrizada(ConsultaParametrizadaCliente formObj);
     /**
      *
@@ -15,4 +16,5 @@ public interface ClientesService {
      */
     Cliente crear_modificar(Cliente c);
     Cliente findById(String email);
+
 }

@@ -13,10 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ClientesServiceImplementacion implements ClientesService {
+public class ClientesServiceImplementacion  implements ClientesService {
 
     @Autowired
     private ClientesRepository clientesRepository;
+
+    @Override
+    public List<Cliente> findAll() {
+        return clientesRepository.findAll();
+    }
 
     @Override
     public List<Cliente> consultaParametrizada(ConsultaParametrizadaCliente formObj) {

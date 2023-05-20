@@ -2,6 +2,8 @@ package com.pablofersep.practicaintegradora.servicios.principales;
 
 import com.pablofersep.practicaintegradora.entidades.principales.Usuario;
 
+import java.util.List;
+
 public interface UsuarioService {
 
     /**
@@ -11,4 +13,5 @@ public interface UsuarioService {
     Usuario findByEmailEquals(String email);
 
     Usuario crear_modificar(Usuario u);
+    List<Usuario> findAll();
 }

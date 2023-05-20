@@ -9,8 +9,7 @@ import com.pablofersep.practicaintegradora.entidades.principales.Usuario;
 import com.pablofersep.practicaintegradora.formobjects.cliente.RegistroClienteDatosContacto;
 import com.pablofersep.practicaintegradora.formobjects.cliente.RegistroClienteDatosPersonales;
 import com.pablofersep.practicaintegradora.formobjects.cliente.RegistroClienteDatosCliente;
-import com.pablofersep.practicaintegradora.repositorios.datos.*;
-import com.pablofersep.practicaintegradora.servicios.datos.TipoClienteService;
+import com.pablofersep.practicaintegradora.servicios.datos.*;
 import com.pablofersep.practicaintegradora.servicios.principales.CarritoService;
 import com.pablofersep.practicaintegradora.servicios.principales.CategoriaService;
 import com.pablofersep.practicaintegradora.servicios.principales.ClientesService;
@@ -33,13 +32,15 @@ import java.time.LocalDateTime;
 @RequestMapping(value = "/registro/cliente")
 public class ControladorRegistroCliente {
     @Autowired
-    private GeneroRepository generoRepository;
+    private GeneroService generoService;
     @Autowired
-    private PaisRepository paisRepository;
+    private PaisService paisService;
     @Autowired
-    private TipoViaRepository tipoViaRepository;
+    private IdiomaService idiomaService;
     @Autowired
-    private TipoDocumentoClienteRepository tipoDocumentoClienteRepository;
+    private TipoViaService tipoViaService;
+    @Autowired
+    private TipoDocumentoClienteService tipoDocumentoClienteService;
     @Autowired
     private ClientesService clientesService;
     @Autowired
@@ -51,18 +52,13 @@ public class ControladorRegistroCliente {
     @Autowired
     private CarritoService carritoService;
 
-    private Usuario user;
-    private Cliente cliente = new Cliente();
-    private RegistroClienteDatosPersonales formObjDatosPersonales = new RegistroClienteDatosPersonales();
-    private RegistroClienteDatosContacto formObjDatosContacto = new RegistroClienteDatosContacto();
-    private RegistroClienteDatosCliente formObjDatosCliente = new RegistroClienteDatosCliente();
-
     @ModelAttribute
     public void anadirListas(Model m) {
-        m.addAttribute("generos", generoRepository.findAll());
-        m.addAttribute("paises", paisRepository.findAll());
-        m.addAttribute("vias", tipoViaRepository.findAll());
-        m.addAttribute("documentos", tipoDocumentoClienteRepository.findAll());
+        m.addAttribute("generos", generoService.findAll());
+        m.addAttribute("paises", paisService.findAll());
+        m.addAttribute("idiomas", idiomaService.findAll());
+        m.addAttribute("vias", tipoViaService.findAll());
+        m.addAttribute("documentos", tipoDocumentoClienteService.findAll());
         m.addAttribute("categorias", categoriaService.findAll());
     }
 
@@ -72,13 +68,19 @@ public class ControladorRegistroCliente {
             RedirectAttributes redirect
     ) {
         ModelAndView mav = new ModelAndView();
-        Usuario u = (Usuario) sesion.getAttribute("usuario");
-        if (u == null) {
+        Usuario user = (Usuario) sesion.getAttribute("usuario");
+        if (user == null) {
             redirect.addAttribute("mensaje", "Necesitas logearte para poder registrar un cliente");
             mav.setViewName("redirect:/login/usuario");
             return mav;
+        }if (usuarioService.findByEmailEquals(user.getEmail()).getCliente()!=null){
+            redirect.addAttribute("mensaje", "Esta cuenta ya tiene un cliente registrado");
+            mav.setViewName("redirect:/cliente/listado");
+            return mav;//Redireccionar A Vue
         }
         sesion.setAttribute("registro_cliente", "1");
+        RegistroClienteDatosPersonales formObjDatosPersonales = (RegistroClienteDatosPersonales)sesion.getAttribute("formObjDatosPersonales");
+        if (formObjDatosPersonales == null) formObjDatosPersonales = new RegistroClienteDatosPersonales();
         mav.addObject("datosPersonales", formObjDatosPersonales);
         mav.addObject("ruta", "/cliente/datos_personales");
         mav.setViewName("registro");
@@ -96,15 +98,16 @@ public class ControladorRegistroCliente {
         mav.addObject("ruta", "/cliente/datos_personales");
         mav.setViewName("registro");
         if (errores.hasErrors()) return mav;
-
-        formObjDatosPersonales = formObj;
+        Cliente cliente = new Cliente();
+        sesion.setAttribute("formObjDatosPersonales", formObj);
         cliente.setNombre(formObj.getNombre());
         cliente.setApellidos(formObj.getApellidos());
         cliente.setFechaNacimiento(formObj.getFechaNacimiento());
         cliente.setGenero(formObj.getGeneroSeleccionado());
-        cliente.setPaisNacimiento(paisRepository.findPaisBySiglasEquals(formObj.getPaisSeleccionado()));
+        cliente.setPaisNacimiento(paisService.findBySiglas(formObj.getPaisSeleccionado()));
 
         sesion.setAttribute("registro_cliente", "2");
+        sesion.setAttribute("cliente", cliente);
         mav.setViewName("redirect:/registro/cliente/datos_contacto");
         return mav;
     }
@@ -119,6 +122,8 @@ public class ControladorRegistroCliente {
             mav.setViewName("redirect:/registro/cliente/datos_personales");
             return mav;
         }
+        RegistroClienteDatosContacto formObjDatosContacto = (RegistroClienteDatosContacto)sesion.getAttribute("formObjDatosContacto");
+        if (formObjDatosContacto == null) formObjDatosContacto = new RegistroClienteDatosContacto();
         mav.addObject("datosContacto", formObjDatosContacto);
         mav.addObject("ruta", "/cliente/datos_contacto");
         mav.setViewName("registro");
@@ -141,10 +146,10 @@ public class ControladorRegistroCliente {
         mav.addObject("ruta", "/cliente/datos_contacto");
         mav.setViewName("registro");
         if (errores.hasErrors()) return mav;
-
-        formObjDatosContacto = formObj;
+        Cliente cliente = (Cliente) sesion.getAttribute("cliente");
+        sesion.setAttribute("formObjDatosContacto", formObj);
         cliente.setTelefonoMovil(formObj.getTelefonoMovil());
-        cliente.setTipoDocumentoCliente(tipoDocumentoClienteRepository.findTipoDocumentoClienteBySiglasEquals(formObj.getTipoDocumento()).getNombre());
+        cliente.setTipoDocumentoCliente(tipoDocumentoClienteService.findBySiglas(formObj.getTipoDocumento()).getNombre());
         cliente.setDocumento(formObj.getDocumento());
         Direccion direccion = new Direccion();
         direccion.setNombre(formObj.getNombreDireccion());
@@ -159,6 +164,7 @@ public class ControladorRegistroCliente {
         cliente.setDireccion(direccion);
 
         sesion.setAttribute("registro_cliente", "3");
+        sesion.setAttribute("cliente", cliente);
         mav.setViewName("redirect:/registro/cliente/datos_cliente");
         return mav;
     }
@@ -173,6 +179,8 @@ public class ControladorRegistroCliente {
             mav.setViewName("redirect:/registro/cliente/datos_contacto");
             return mav;
         }
+        RegistroClienteDatosCliente formObjDatosCliente = (RegistroClienteDatosCliente)sesion.getAttribute("formObjDatosCliente");
+        if (formObjDatosCliente == null) formObjDatosCliente = new RegistroClienteDatosCliente();
         mav.addObject("datosCliente", formObjDatosCliente);
         mav.addObject("ruta", "/cliente/datos_cliente");
         mav.setViewName("registro");
@@ -195,15 +203,14 @@ public class ControladorRegistroCliente {
         mav.addObject("ruta", "/cliente/datos_cliente");
         mav.setViewName("registro");
         if (errores.hasErrors()) return mav;
-
-        formObjDatosCliente = formObj;
+        Cliente cliente = (Cliente) sesion.getAttribute("cliente");
+        sesion.setAttribute("formObjDatosCliente", formObj);
         cliente.setCategoriasInteres(categoriaService.categoriasPorCodigos(formObj.getCategoriasSeleccionadas()));
         cliente.setComentarios(formObj.getComentarios());
         cliente.setAceptacionLicencia(true);
 
-        //ponerle los usuarios a la auditoria
-
         sesion.setAttribute("registro_cliente", "4");
+        sesion.setAttribute("cliente", cliente);
         mav.setViewName("redirect:/registro/cliente/confirmar_datos");
         return mav;
     }
@@ -214,11 +221,11 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
-        System.out.println(step);
         if (step == null || step.equals("1") || step.equals("2") || step.equals("3")) {
             mav.setViewName("redirect:/registro/cliente/datos_cliente");
             return mav;
         }
+        Cliente cliente = (Cliente) sesion.getAttribute("cliente");
         mav.addObject("cliente", cliente);
         mav.addObject("ruta", "/cliente/confirmar_datos");
         mav.setViewName("registro");
@@ -236,13 +243,14 @@ public class ControladorRegistroCliente {
             mav.setViewName("redirect:/registro/cliente/datos_cliente");
             return mav;
         }
-        user = usuarioService.findByEmailEquals(((Usuario) sesion.getAttribute("usuario")).getEmail());
+        Usuario user = usuarioService.findByEmailEquals(((Usuario) sesion.getAttribute("usuario")).getEmail());
         Auditoria auditoria = new Auditoria();
         auditoria.setFechaAltaEntidad(LocalDateTime.now().toLocalDate());
         auditoria.setFechaUltimaModificacion(LocalDateTime.now().toLocalDate());
         auditoria.setFechaBorradoEntidad(null);
         auditoria.setFechaFinalBloqueo(Constantes.MIN_MYSQL_DATE);
 
+        Cliente cliente = (Cliente) sesion.getAttribute("cliente");
         cliente.setAuditoria(auditoria);
         cliente.setUsuario(user);
         cliente.setId(user.getEmail());
@@ -264,6 +272,7 @@ public class ControladorRegistroCliente {
             mav.setViewName("redirect:/cliente/listado");
             return mav;
         }
+        sesion.setAttribute("registro_cliente", null);
         redirect.addAttribute("mensaje", "Creacion de cliente y su carrito correctamente");
         mav.setViewName("redirect:/cliente/listado");
         return mav;

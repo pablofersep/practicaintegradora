@@ -1,0 +1,41 @@
+<h2>-- Detalles de Proveedor --</h2>
+<div class="table" th:object="${proveedor}">
+    <div class="row">
+        <div class="cell bold">Campo</div>
+        <div class="cell bold">Valor</div>
+    </div>
+    <div class="row">
+        <div class="cell">Nombre</div>
+        <div class="cell" th:text="*{nombre}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Tipo Documneto</div>
+        <div class="cell" th:text="*{tipoDocumento}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Documento</div>
+        <div class="cell" th:text="*{documento}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Telefono Fijo</div>
+        <div class="cell" th:text="*{telefonoFijo}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Telefono Movil</div>
+        <div class="cell" th:text="*{telefonoMovil}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Clase Proveedor</div>
+        <div class="cell" th:text="*{claseProveedor}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Direccion</div>
+        <div class="cell">
+            <th:block th:text="*{direccion.tipoVia}"/>. <th:block th:text="*{direccion.nombre}"/>, <th:block th:text="*{direccion.numero}"/>, <th:block th:text="*{direccion.localidad}"/>, <th:block th:text="*{direccion.codigoPostal}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">Comentarios</div>
+        <div class="cell" th:text="*{comentarios}"></div>
+    </div>
+</div>

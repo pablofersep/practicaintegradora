@@ -4,14 +4,16 @@
         <div class="cell bold">Codigo</div>
         <div class="cell bold">Descripcion</div>
         <div class="cell bold">Categoria Padre</div>
-        <div class="cell bold">Categorias Hijas</div>
         <div class="cell bold">Detalles</div>
     </div>
     <div class="row" th:each="categoria : ${categorias}">
         <div class="cell" th:text="${categoria.codigo}"></div>
         <div class="cell" th:text="${categoria.descripcion}"></div>
-        <div class="cell" th:text="${categoria.categoriaPadre}"></div>
-        <div class="cell">Cat Hijas</div>
+        <div class="cell">
+            <th:block th:if="${categoria.categoriaPadre}!=null"
+                      th:text="${categoria.categoriaPadre.descripcion}"></th:block>
+            <th:block th:if="${categoria.categoriaPadre}==null">No tiene Categoria Padre</th:block>
+        </div>
         <div class="cell"><a th:href="|http://localhost:8080/categoria/detalle/${categoria.codigo}|">Detalles</a></div>
     </div>
 </div>

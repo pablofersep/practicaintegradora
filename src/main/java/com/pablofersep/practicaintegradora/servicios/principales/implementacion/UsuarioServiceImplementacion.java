@@ -6,6 +6,8 @@ import com.pablofersep.practicaintegradora.servicios.principales.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioServiceImplementacion implements UsuarioService {
     @Autowired
@@ -23,5 +25,10 @@ public class UsuarioServiceImplementacion implements UsuarioService {
         }catch (Exception e){
             return null;
         }
+    }
+
+    @Override
+    public List<Usuario> findAll() {
+        return usuarioRepository.findAll();
     }
 }
