@@ -1,14 +1,11 @@
-drop schema practicaintegradora;
-create schema practicaintegradora;
-
 insert into genero(nombre, siglas) values ("Femenino", "F");
 insert into genero(nombre, siglas) values ("Masculino", "M");
 insert into genero(nombre, siglas) values ("No Binario", "N");
 insert into genero(nombre, siglas) values ("Otro", "O");
-insert into estado_pedido(nombre, siglas) values ("En preparacion", "P");
-insert into estado_pedido(nombre, siglas) values ("En transito", "T");
-insert into estado_pedido(nombre, siglas) values ("Extraviado", "X");
-insert into estado_pedido(nombre, siglas) values ("Entregado", "E");
+insert into estado_pedido values ("En preparacion", "P", 1);
+insert into estado_pedido values ("En transito", "T", 2);
+insert into estado_pedido values ("Extraviado", "X", 3);
+insert into estado_pedido values ("Entregado", "E", 4);
 insert into tipo_documento_cliente(nombre, siglas) values ("DNI", "D");
 insert into tipo_documento_cliente(nombre, siglas) values ("NIE", "N");
 insert into tipo_documento_cliente(nombre, siglas) values ("Nº Pasaporte", "P");
@@ -53,17 +50,42 @@ insert into pais(nombre, siglas) values ("Portugal", "pt");
 insert into idioma(nombre, siglas) values ("Inglés", "en");
 insert into idioma(nombre, siglas) values ("Español", "es");
 insert into idioma(nombre, siglas) values ("Francés", "fr");
-
 insert into categoria(codigo, descripcion) values ("1", "deporte");
 insert into categoria(codigo, descripcion) values ("2", "musica");
 insert into categoria(codigo, descripcion) values ("3", "cine");
-insert into categoria(codigo, descripcion, categoria_padre_codigo) values ("4", "futbol", "1");
-insert into categoria(codigo, descripcion, categoria_padre_codigo) values ("5", "pop", "2");
-insert into categoria(codigo, descripcion, categoria_padre_codigo) values ("6", "funk", "2");
-insert into categoria(codigo, descripcion, categoria_padre_codigo) values ("7", "fantasia", "3");
-insert into categoria(codigo, descripcion, categoria_padre_codigo) values ("8", "futbol europeo", "4");
-insert into categoria(codigo, descripcion, categoria_padre_codigo) values ("9", "steampunk", "3");
+insert into categoria(codigo, descripcion, categoria_padre) values ("4", "futbol", "1");
+insert into categoria(codigo, descripcion, categoria_padre) values ("5", "pop", "2");
+insert into categoria(codigo, descripcion, categoria_padre) values ("6", "funk", "2");
+insert into categoria(codigo, descripcion, categoria_padre) values ("7", "fantasia", "3");
+insert into categoria(codigo, descripcion, categoria_padre) values ("8", "futbol europeo", "4");
+insert into categoria(codigo, descripcion, categoria_padre) values ("9", "steampunk", "3");
 
-insert into aviso(descripcion, urgencia_aviso, fecha_creacion) values ("prueba", "Alta", "2001-12-09");
+INSERT INTO usuario (`email`,`fecha_alta_entidad`,`fecha_borrado_entidad`,`fecha_final_bloqueo`,`fecha_ultima_modificacion`,`clave`,`fecha_ultima_conexion`,`numero_accesos`,`usuario_realiza_alta_email`,`usuario_realiza_borrado_email`,`usuario_realiza_ultima_modificacion_email`) VALUES ('alfa@gmail.com','2023-05-21',NULL,'1000-01-01','2023-05-21','alfa','2023-05-21',1,NULL,NULL,NULL);
+INSERT INTO usuario (`email`,`fecha_alta_entidad`,`fecha_borrado_entidad`,`fecha_final_bloqueo`,`fecha_ultima_modificacion`,`clave`,`fecha_ultima_conexion`,`numero_accesos`,`usuario_realiza_alta_email`,`usuario_realiza_borrado_email`,`usuario_realiza_ultima_modificacion_email`) VALUES ('beta@gmail.com','2023-05-21',NULL,'1000-01-01','2023-05-21','beta','2023-05-21',2,NULL,NULL,NULL);
+INSERT INTO usuario (`email`,`fecha_alta_entidad`,`fecha_borrado_entidad`,`fecha_final_bloqueo`,`fecha_ultima_modificacion`,`clave`,`fecha_ultima_conexion`,`numero_accesos`,`usuario_realiza_alta_email`,`usuario_realiza_borrado_email`,`usuario_realiza_ultima_modificacion_email`) VALUES ('ganma@gmail.com','2023-05-21',NULL,'1000-01-01','2023-05-21','ganma','2023-05-21',3,NULL,NULL,NULL);
 
-insert into catalogo_proveedor_lineas_catalogo values (1, 2.33, 1);
+INSERT INTO `practicaintegradora`.`cliente` (`id_usuario`, `aceptacion_licencia`, `apellidos`, `fecha_alta_entidad`, `fecha_final_bloqueo`, `fecha_ultima_modificacion`, `comentarios`, `codigo_postal`, `localidad`, `nombre_direccion`, `numero`, `planta`, `puerta`, `tipo_via`, `documento`, `fecha_nacimiento`, `gasto_acumulado_cliente`, `genero`, `nombre`, `telefono_movil`, `tipo_documento_cliente`, pais_nacimiento) VALUES ('alfa@gmail.com', true, 'Fernandez', '2023-05-21', '1000-01-01', '2023-05-21','No comment', '28030', 'Madrid', 'Arroyo Fontarron', '393', '3', 'c', 'Cl', '123', '2001-12-11', '0', 'M','Pablo', '622009362', 'DNI', 'es');
+INSERT INTO `practicaintegradora`.`cliente` (`id_usuario`, `aceptacion_licencia`, `apellidos`, `fecha_alta_entidad`, `fecha_final_bloqueo`, `fecha_ultima_modificacion`, `comentarios`, `codigo_postal`, `localidad`, `nombre_direccion`, `numero`, `planta`, `puerta`, `tipo_via`, `documento`, `fecha_nacimiento`, `gasto_acumulado_cliente`, `genero`, `nombre`, `telefono_movil`, `tipo_documento_cliente`, pais_nacimiento) VALUES ('ganma@gmail.com', true, 'Saiz', '2023-05-19', '1000-01-01', '2023-05-21', 'Yes Coment', '28042', 'Carabanchel', 'Oporto', '45', '2', 'b', 'Cl', '321', '2003-05-03', '0', 'F', 'Adriana','123456789','DNI', 'fr');
+INSERT INTO `practicaintegradora`.`cliente` (`id_usuario`, `aceptacion_licencia`, `apellidos`, `fecha_alta_entidad`, `fecha_final_bloqueo`, `fecha_ultima_modificacion`, `codigo_postal`, `localidad`, `nombre_direccion`, `numero`, `planta`, `puerta`, `tipo_via`, `documento`, `fecha_nacimiento`, `gasto_acumulado_cliente`, `genero`, `nombre`, `telefono_movil`, `tipo_documento_cliente`, pais_nacimiento) VALUES ('beta@gmail.com', true, 'Tort', '2022-04-23', '1000-01-01', '2023-05-21', '45', 'Madrid', 'Garcia Luna', '25','0', 'c', 'Av', '231', '2001-05-12', '0', 'N', 'Kike', '987654321', 'DNI', 'pt');
+
+INSERT INTO `practicaintegradora`.`carrito` (`id`, `fecha_creacion`, `precio`, `cliente_id_usuario`) VALUES ('100', '2023-05-21', '0.00', 'alfa@gmail.com');
+INSERT INTO `practicaintegradora`.`carrito` (`id`, `fecha_creacion`, `precio`, `cliente_id_usuario`) VALUES ('101', '2023-05-21', '0.00', 'beta@gmail.com');
+INSERT INTO `practicaintegradora`.`carrito` (`id`, `fecha_creacion`, `precio`, `cliente_id_usuario`) VALUES ('102', '2023-05-21', '0.00', 'ganma@gmail.com');
+
+INSERT INTO `practicaintegradora`.`cliente_categorias_interes` (`cliente_id_usuario`, `categorias_interes_codigo`) VALUES ('alfa@gmail.com', '1');
+INSERT INTO `practicaintegradora`.`cliente_categorias_interes` (`cliente_id_usuario`, `categorias_interes_codigo`) VALUES ('alfa@gmail.com', '4');
+INSERT INTO `practicaintegradora`.`cliente_categorias_interes` (`cliente_id_usuario`, `categorias_interes_codigo`) VALUES ('beta@gmail.com', '5');
+INSERT INTO `practicaintegradora`.`cliente_categorias_interes` (`cliente_id_usuario`, `categorias_interes_codigo`) VALUES ('ganma@gmail.com', '5');
+INSERT INTO `practicaintegradora`.`cliente_categorias_interes` (`cliente_id_usuario`, `categorias_interes_codigo`) VALUES ('ganma@gmail.com', '7');
+INSERT INTO `practicaintegradora`.`cliente_categorias_interes` (`cliente_id_usuario`, `categorias_interes_codigo`) VALUES ('ganma@gmail.com', '8');
+
+INSERT INTO producto VALUES ('1','2023-05-22',NULL,'1000-01-01','2023-05-22',10,'','Ukele',1.50,0,1,NULL,'Marshal','Numb',3.00,2,3,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('2','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('3','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('4','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('5','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('6','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('7','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('8','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('9','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO producto VALUES ('10','2023-05-22',NULL,'1000-01-01','2023-05-22',150,'','Agua',0.50,0,0,NULL,'Fuente','Primaveral',2.00,7,10,NULL,NULL,NULL,NULL,NULL);

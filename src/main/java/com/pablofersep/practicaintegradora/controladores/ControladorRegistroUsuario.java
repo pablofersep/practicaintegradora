@@ -8,6 +8,7 @@ import com.pablofersep.practicaintegradora.repositorios.principales.UsuarioRepos
 import com.pablofersep.practicaintegradora.servicios.principales.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,8 @@ public class ControladorRegistroUsuario {
     public ModelAndView registrarUsuario(
             @Valid @ModelAttribute("registroUsuario") RegistroUsuario registroUsuario,
             BindingResult errores,
-            RedirectAttributes redirect
+            RedirectAttributes redirect,
+            HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
         mav.addObject("ruta", "/usuario/registro");
@@ -70,6 +72,7 @@ public class ControladorRegistroUsuario {
             redirect.addAttribute("mensaje", "Usuario creado correctamente");
         }
         mav.clear();
+        sesion.setAttribute("usuario", user);
         mav.setViewName("redirect:/registro/cliente/datos_personales");
         return mav;
     }

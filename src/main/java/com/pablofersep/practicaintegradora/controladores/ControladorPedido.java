@@ -65,12 +65,7 @@ public class ControladorPedido {
         mav.setViewName("redirect:/pedido/listado");
         Usuario u = (Usuario) sesion.getAttribute("usuario");
         if (u == null) {
-            mav.addObject("ruta", "noSesion");
             return mav;
-        } else {
-            sesion.setAttribute("conteo", ((int) sesion.getAttribute("conteo")) + 1);
-            mav.addObject("nombreUsuario", u.getEmail());
-            mav.addObject("conteo", sesion.getAttribute("conteo"));
         }
         List<EstadoPedido> estadoPedidos = estadoPedidoService.findAll();
         Pedido pedido = pedidoService.findById(id);

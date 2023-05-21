@@ -274,7 +274,7 @@ public class ControladorRegistroCliente {
         }
         sesion.setAttribute("registro_cliente", null);
         redirect.addAttribute("mensaje", "Creacion de cliente y su carrito correctamente");
-        mav.setViewName("redirect:/http://localhost:5173");
+        mav.setViewName("redirect:http://localhost:5173");
         return mav;
     }
 

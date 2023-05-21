@@ -24,6 +24,8 @@ public class ControladorRest {
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
+    private CategoriaService categoriaService;
+    @Autowired
     private ProductoService productoService;
     @Autowired
     private CarritoService carritoService;
@@ -48,6 +50,11 @@ public class ControladorRest {
         return ResponseEntity.ok(productoService.findAll());
     }
     @CrossOrigin
+    @GetMapping("/categoria/devolver_todos")
+    public ResponseEntity<Iterable<Categoria>> devolverCategorias() {
+        return ResponseEntity.ok(categoriaService.findAll());
+    }
+    @CrossOrigin
     @GetMapping("/producto/categoria/{categoria}")
     public ResponseEntity<Iterable<Producto>> devolverProductosbycat(
             @PathVariable("categoria")String cat
@@ -62,12 +69,18 @@ public class ControladorRest {
         return ResponseEntity.ok(productoService.findProductoByCodigo(id));
     }
 
+    /**
+     *
+     * @param email
+     * @return 0 si no tiene productos, 1 si se ha producido un error, 2 si se ha procesado el pago
+     */
     @CrossOrigin
     @PutMapping("/carrito/comprar")
-    public boolean compraCarrito(
+    public int compraCarrito(
             @RequestBody EmailDTO email
     ){
         Carrito carrito = carritoService.findCarritoByEmailCliente(email.getEmail());
+        if (carrito.getLineasCarrito().size() == 0) return 0;
         Pedido pedido = new Pedido();
         Cliente cliente = carrito.getCliente();
         cliente.setGastoAcumuladoCliente(cliente.getGastoAcumuladoCliente().add(carrito.getPrecio()));
@@ -84,17 +97,17 @@ public class ControladorRest {
             //if (i < 0) return false;
             producto.setCantidadAlmacen(i);
             Producto comprobacion = productoService.crear_modificar(producto);
-            if (comprobacion == null) return false;
+            if (comprobacion == null) return 1;
             ControladorAviso.creacionAviso(comprobacion,productoService, urgenciaAvisoService, avisoService);
             pedido.getLineasPedido().add(new LineaPedido(producto, lc.getUnidades(), producto.getPrecio()));
         }
         carrito.getLineasCarrito().clear();
         carrito.setPrecio(BigDecimal.valueOf(0));
         Carrito comprobacion = carritoService.crear_modificar(carrito);
-        if (comprobacion == null) return false;
+        if (comprobacion == null) return 1;
         Pedido comprobacion1 = pedidoService.crear_modificar(pedido);
-        if (comprobacion1 == null) return false;
-        return true;
+        if (comprobacion1 == null) return 1;
+        return 2;
     }
     @CrossOrigin
     @PostMapping("/carrito/listar")
@@ -143,9 +156,15 @@ public class ControladorRest {
         }
         return ResponseEntity.ok(true);
     }
+
+    /**
+     *
+     * @param lineaCarritoDTO
+     * @return 0 si no hay mas stock, 1 si hay error, 2 si todo correcto
+     */
     @CrossOrigin
     @PutMapping("/carrito/linea/sumar")
-    public boolean sumarUnidadLinea(
+    public int sumarUnidadLinea(
             @RequestBody LineaCarritoDTO lineaCarritoDTO
     ) {
         Producto producto = productoService.findProductoByCodigo(lineaCarritoDTO.getId());
@@ -153,6 +172,7 @@ public class ControladorRest {
         //Condicion para decir que no nos quedan
         for (LineaCarrito linea : carrito.getLineasCarrito()) {
             if (linea.getProducto().getCodigo().equals(producto.getCodigo())) {
+                if (linea.getUnidades() == producto.getCantidadAlmacen())return 0;
                 linea.setUnidades(linea.getUnidades()+1);
             }
         }
@@ -163,19 +183,20 @@ public class ControladorRest {
         carrito.setPrecio(BigDecimal.valueOf(precio));
         Carrito comprobacion = carritoService.crear_modificar(carrito);
         if (comprobacion == null) {
-            return false;
+            return 1;
         }
-        return true;
+        return 2;
     }
     @CrossOrigin
     @PutMapping("/carrito/linea/restar")
-    public boolean restarUnidadLinea(
+    public int restarUnidadLinea(
             @RequestBody LineaCarritoDTO lineaCarritoDTO
     ) {
         Producto producto = productoService.findProductoByCodigo(lineaCarritoDTO.getId());
         Carrito carrito = carritoService.findCarritoByEmailCliente(lineaCarritoDTO.getEmail());
         for (LineaCarrito linea : carrito.getLineasCarrito()) {
             if (linea.getProducto().getCodigo().equals(producto.getCodigo())) {
+                if (linea.getUnidades() == 1)return 0;
                 linea.setUnidades(linea.getUnidades()-1);
             }
         }
@@ -186,9 +207,9 @@ public class ControladorRest {
         carrito.setPrecio(BigDecimal.valueOf(precio));
         Carrito comprobacion = carritoService.crear_modificar(carrito);
         if (comprobacion == null) {
-            return false;
+            return 1;
         }
-        return true;
+        return 2;
     }
     @CrossOrigin
     @PutMapping("/carrito/linea/delete")

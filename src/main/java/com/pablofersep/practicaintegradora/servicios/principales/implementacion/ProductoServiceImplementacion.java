@@ -37,6 +37,8 @@ public class ProductoServiceImplementacion implements ProductoService {
     @Override
     public List<Producto> findAllByCat(String cat) {
         Categoria cate = categoriaService.findByDesc(cat);
+        Categoria fill = new Categoria();
+        if (cate == null)cate= fill;
         return productoRepository.findProductoByCategoriasContains(cate);
     }
 

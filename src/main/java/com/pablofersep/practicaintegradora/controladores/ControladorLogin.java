@@ -92,8 +92,8 @@ public class ControladorLogin {
 
         if (cookieClave.equals(user.getClave())) {
             actualizarUsuario(user);
-            mav.setViewName("redirect:http://localhost:5173/?usuario="+user.getEmail());//redireccionar a vue
-            sesion.setAttribute("usuario", user);
+            mav.setViewName("redirect:http://localhost:5173/?usuario="+user.getEmail());
+            sesion.setAttribute("usuario", null);
             return mav;
         }
 
@@ -103,8 +103,8 @@ public class ControladorLogin {
                 cookie.setPath("/");
                 respuesta.addCookie(cookie);
                 actualizarUsuario(user);
-                mav.setViewName("redirect:http://localhost:5173/?usuario="+user.getEmail());//redireccionar a vue
-                sesion.setAttribute("usuario", user);
+                mav.setViewName("redirect:http://localhost:5173/?usuario="+user.getEmail());
+                sesion.setAttribute("usuario", null);
                 return mav;
             } else {
                 intentos++;
@@ -131,10 +131,10 @@ public class ControladorLogin {
             HttpSession sesion
     ){
         ModelAndView mav = new ModelAndView();
-        Usuario usuario1 = new Usuario();
-        usuario1.setEmail(usuario);
-        usuario1.setClave(usuario);
-        sesion.setAttribute("usuario", usuario1);
+        Usuario admin = new Usuario();
+        admin.setEmail(usuario);
+        admin.setClave(usuario);
+        sesion.setAttribute("usuario", admin);
         sesion.setAttribute("conteo", 0);
         mav.setViewName("redirect:/cliente/listado");
         return mav;

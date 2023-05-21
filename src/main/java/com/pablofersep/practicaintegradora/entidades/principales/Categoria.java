@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +20,8 @@ public class Categoria {
     private String codigo;
     @Column
     private String descripcion;
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne
+    @JoinColumn(name = "categoria_padre")
     private Categoria categoriaPadre;
     @OneToMany(mappedBy = "categoriaPadre")
     private Set<Categoria> categoriasHijas;
