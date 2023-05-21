@@ -1,12 +1,13 @@
-<div th:text="${mensaje}"></div>
+<div class="mensaje" th:text="${mensaje}"></div>
 <form method="post" action="/login/usuario">
     <label for="usuario">Usuario: </label>
     <input name="usuario" id="usuario" type="text"/>
     <br>
-    <th:block th:if="${error}!=null">
+    <th:block class="rojo" th:if="${error}!=null">
         <label th:text="${error}"></label>
         <br>
     </th:block>
     <input type="submit" value="Enviar"/>
     <input type="reset" value="Reesttablecer">
 </form>
+<a href="http://localhost:8080/registro/usuario">Crear usuario nuevo</a>

@@ -70,7 +70,7 @@ public class ControladorRegistroUsuario {
             redirect.addAttribute("mensaje", "Usuario creado correctamente");
         }
         mav.clear();
-        mav.setViewName("redirect:/login/usuario");
+        mav.setViewName("redirect:/registro/cliente/datos_personales");
         return mav;
     }
 

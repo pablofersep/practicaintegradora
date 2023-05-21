@@ -16,4 +16,6 @@ public class EstadoPedido {
     private String siglas;
     @Column
     private String nombre;
+    @Column
+    private Integer orden;
 }

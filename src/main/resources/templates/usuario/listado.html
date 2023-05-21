@@ -26,10 +26,10 @@
             <th:block th:if="${usuario.auditoria.fechaBorradoEntidad}!=null" th:text="${usuario.auditoria.fechaBorradoEntidad}"></th:block>
             <th:block th:if="${usuario.auditoria.fechaBorradoEntidad}==null">No</th:block>
         </div>
-        <div class="cell"><a th:href="|http://localhost:8080/usuario/baja/${usuario.email}|">Borrar</a></div>
-        <div class="cell"><a th:href="|http://localhost:8080/usuario/alta/${usuario.email}|">Alta</a></div>
-        <div class="cell"><a th:href="|http://localhost:8080/usuario/bloqueo/${usuario.email}|">Bloqueo</a></div>
-        <div class="cell"><a th:href="|http://localhost:8080/usuario/desbloqueo/${usuario.email}|">Desbloqueo</a></div>
+        <div class="cell"><a onclick="return confirm('¿Estas seguro de que quieres darlo de baja?')" th:href="|http://localhost:8080/usuario/baja/${usuario.email}|">Borrar</a></div>
+        <div class="cell"><a onclick="return confirm('¿Estas seguro de que quieres darlo de alta?')" th:href="|http://localhost:8080/usuario/alta/${usuario.email}|">Alta</a></div>
+        <div class="cell"><a onclick="return confirm('¿Estas seguro de que quieres bloquearlo?')" th:href="|http://localhost:8080/usuario/bloqueo/${usuario.email}|">Bloqueo</a></div>
+        <div class="cell"><a onclick="return confirm('¿Estas seguro de que quieres desbloquearlo?')" th:href="|http://localhost:8080/usuario/desbloqueo/${usuario.email}|">Desbloqueo</a></div>
         <div class="cell"><a th:href="|http://localhost:8080/usuario/detalle/${usuario.email}|">Detalle</a></div>
     </div>
 </div>

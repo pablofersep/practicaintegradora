@@ -26,4 +26,9 @@ public class PedidoServiceImplementacion implements PedidoService {
             return null;
         }
     }
+
+    @Override
+    public Pedido findById(String siglas) {
+        return pedidoRepository.findPedidoByIdEquals(Long.valueOf(siglas));
+    }
 }

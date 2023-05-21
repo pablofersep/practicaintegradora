@@ -90,7 +90,7 @@ public class ControladorAviso {
         }if (p.getCantidadAlmacen() < p.getUmbralOcultoEnTienda()) {
             a.setUrgenciaAviso(us.getUrgenciaByCodigo("A"));
             a.setFechaCreacion(LocalDate.now());
-            a.setDescripcion("Fecha-"+LocalDate.now()+"-Codigo-"+ p.getCodigo()+": Se rebasa el umbral de ocultamiento");
+            a.setDescripcion("Fecha-"+LocalDate.now()+"--Producto_"+p.getCodigo()+":"+ p.getDescripcion()+": Se rebasa el umbral de ocultamiento");
             p.getAuditoria().setFechaUltimaModificacion(LocalDate.now());
             p.getAuditoria().setFechaBorradoEntidad(LocalDate.now());
             ps.crear_modificar(p);

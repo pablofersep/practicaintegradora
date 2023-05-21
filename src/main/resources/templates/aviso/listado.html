@@ -8,6 +8,6 @@
     <div class="row" th:each="aviso : ${avisos}" th:if="${aviso.fechaProcesado}==null">
         <div class="cell" th:class="${aviso.urgenciaAviso}" th:text="${aviso.descripcion}"></div>
         <div class="cell" th:class="${aviso.urgenciaAviso}" th:text="${aviso.urgenciaAviso}"></div>
-        <div class="cell" th:class="${aviso.urgenciaAviso}"><a th:href="|http://localhost:8080/aviso/procesar/${aviso.id}|">Procesar</a></div>
+        <div class="cell" th:class="${aviso.urgenciaAviso}"><a onclick="return confirm('¿Estas seguro de que quieres procesar el aviso?')"th:href="|http://localhost:8080/aviso/procesar/${aviso.id}|">Procesar</a></div>
     </div>
 </div>

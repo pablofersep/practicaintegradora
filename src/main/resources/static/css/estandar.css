@@ -10,7 +10,9 @@
 .row {
     display: table-row;
 }
-
+.rojo{
+    color: red;
+}
 .cell {
     display: table-cell;
     padding: 8px;

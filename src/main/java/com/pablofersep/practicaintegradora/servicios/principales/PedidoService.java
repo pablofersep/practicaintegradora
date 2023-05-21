@@ -8,4 +8,5 @@ public interface PedidoService {
     List<Pedido> findAll();
 
     Pedido crear_modificar(Pedido pedido);
+    Pedido findById(String siglas);
 }
