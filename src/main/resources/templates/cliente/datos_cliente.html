@@ -8,6 +8,8 @@
             </label>
             <br>
         </div>
+        <div class="rojo" th:if="${#fields.hasErrors('categoriasSeleccionadas')}" th:errors="*{categoriasSeleccionadas}"/>
+        <button th:text="#{resetcheckbox}"></button><button th:text="#{selectcheckbox}"></button>
     </fieldset>
     <div>
         <label th:text="#{label.comentarios}"></label><br>
@@ -19,6 +21,6 @@
         <label th:text="#{label.licencia}"></label>
         <div class="rojo" th:if="${#fields.hasErrors('aceptaLicencia')}" th:errors="*{aceptaLicencia}"/>
     </div>
-    <a class="button" href="http://localhost:8080/registro/cliente/datos_contacto" role="button">Volver atras</a>
-    <input type="submit" value="Siguente Paso">
+    <a class="button" href="http://localhost:8080/registro/cliente/datos_contacto" role="button" th:text="#{volveratras}"></a>
+    <input type="submit" th:value="#{submit.siguiente}"><input type="reset" th:value="#{reset}"><button th:text="#{blank}"></button>
 </form>

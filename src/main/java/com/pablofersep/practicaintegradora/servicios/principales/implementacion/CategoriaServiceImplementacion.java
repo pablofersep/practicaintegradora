@@ -53,4 +53,9 @@ public class CategoriaServiceImplementacion implements CategoriaService {
     public List<Categoria> findAll() {
         return categoriaRepository.findAll();
     }
+
+    @Override
+    public Categoria findByDesc(String cat) {
+        return categoriaRepository.findCategoriaByDescripcionEquals(cat);
+    }
 }

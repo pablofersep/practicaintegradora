@@ -1,4 +1,4 @@
-<div class="red" th:text="${mensaje}"></div>
+<div class="mensaje" th:text="${mensaje}"></div>
 <div class="table">
     <div class="row">
         <div class="cell bold">Descripcion</div>
@@ -6,8 +6,8 @@
         <div class="cell bold">Procesar(Visto)</div>
     </div>
     <div class="row" th:each="aviso : ${avisos}" th:if="${aviso.fechaProcesado}==null">
-        <div class="cell" th:text="${aviso.descripcion}"></div>
-        <div class="cell" th:text="${aviso.urgenciaAviso}"></div>
-        <div class="cell"><a th:href="|http://localhost:8080/aviso/procesar/${aviso.id}|">Procesar</a></div>
+        <div class="cell" th:class="${aviso.urgenciaAviso}" th:text="${aviso.descripcion}"></div>
+        <div class="cell" th:class="${aviso.urgenciaAviso}" th:text="${aviso.urgenciaAviso}"></div>
+        <div class="cell" th:class="${aviso.urgenciaAviso}"><a th:href="|http://localhost:8080/aviso/procesar/${aviso.id}|">Procesar</a></div>
     </div>
 </div>

@@ -14,37 +14,37 @@ import lombok.NoArgsConstructor;
 @Data
 public class RegistroClienteDatosContacto {
 
-    @NotNull
-    @NotBlank
-    @Pattern(regexp = "[0-9]{9}")
+    @NotNull(message = "´{error.notnull}")
+    @NotBlank(message = "{error.notblank}")
+    @Pattern(regexp = "[0-9]{9}", message = "{error.movil}")
     private String telefonoMovil;
-    @NotNull
-    @TipoDocumentoClienteExistente
+    @NotNull(message = "{error.notnull}")
+    @TipoDocumentoClienteExistente(message = "{error.tipodocumentoclienteexistente}")
     private String tipoDocumento;
-    @NotNull
-    @NotBlank
+    @NotNull(message = "{error.notnull}")
+    @NotBlank(message = "{error.notblank}")
     private String documento;
-    @NotNull
-    @NotBlank
+    @NotNull(message = "{error.notnull}")
+    @NotBlank(message = "{error.notblank}")
     private String nombreDireccion;
-    @NotNull
-    @TipoViaExistente
+    @NotNull(message = "{error.notnull}")
+    @TipoViaExistente(message = "{error.tipoviaexistente}")
     private String tipoVia;
-    @NotNull
-    @NotBlank
-    @Pattern(regexp = "[0-9]{1,}")
+    @NotNull(message = "{error.notnull}")
+    @NotBlank(message = "{error.notblank}")
+    @Pattern(regexp = "[0-9]{1,}", message = "{error.numero}")
     private String numero;
     private String portal;
-    @Pattern(regexp = "[0-9]{1,}")
+    @Pattern(regexp = "[0-9]{1,}",message = "{error.numero}")
     private String planta;
     private String puerta;
-    @NotNull
-    @NotBlank
+    @NotNull(message = "{error.notnull}")
+    @NotBlank(message = "{error.notblank}")
     private String localidad;
     private String region;
-    @NotNull
-    @NotBlank
-    @Pattern(regexp = "[0-9]{1,}")
+    @NotNull(message = "{error.notnull}")
+    @NotBlank(message = "{error.notblank}")
+    @Pattern(regexp = "[0-9]{1,}",message = "{error.numero}")
     private String codigoPostal;
 
 }

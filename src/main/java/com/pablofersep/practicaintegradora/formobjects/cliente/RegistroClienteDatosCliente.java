@@ -17,13 +17,13 @@ import java.util.Set;
 @Data
 public class RegistroClienteDatosCliente {
 
-    @CategoriasExisten
+    @CategoriasExisten(message = "{error.categoriasexisten}")
     private List<String> categoriasSeleccionadas;
-    @NotNull
+    @NotNull(message = "{error.notnull}")
     private String comentarios;
-    @NotNull
-    @NotBlank
-    @Pattern(regexp = "on")
+    @NotNull(message = "{error.licencia}")
+    @NotBlank(message = "{error.licencia}")
+    @Pattern(regexp = "on", message = "{error.licencia}")
     private String aceptaLicencia;
 
 }

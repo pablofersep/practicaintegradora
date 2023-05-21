@@ -4,7 +4,7 @@
 .table {
     display: table;
     border-collapse: collapse;
-    width: 50%;
+    width: 90%;
 }
 
 .row {
@@ -60,4 +60,26 @@
     border: 1px solid black;
     margin: 5px;
     padding: 5px;
+}
+.Baja{
+    background-color: green;
+    display: table-cell;
+    padding: 8px;
+    border: 1px solid black;
+}
+.Media{
+    background-color: orange;
+    display: table-cell;
+    padding: 8px;
+    border: 1px solid black;
+}
+.Alta{
+    background-color: red;
+    display: table-cell;
+    padding: 8px;
+    border: 1px solid black;
+}
+.mensaje{
+    color: indigo;
+    font-size: 1.5rem;
 }

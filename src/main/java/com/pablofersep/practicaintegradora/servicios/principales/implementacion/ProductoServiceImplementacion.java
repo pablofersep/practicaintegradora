@@ -1,7 +1,9 @@
 package com.pablofersep.practicaintegradora.servicios.principales.implementacion;
 
+import com.pablofersep.practicaintegradora.entidades.principales.Categoria;
 import com.pablofersep.practicaintegradora.entidades.principales.Producto;
 import com.pablofersep.practicaintegradora.repositorios.principales.ProductoRepository;
+import com.pablofersep.practicaintegradora.servicios.principales.CategoriaService;
 import com.pablofersep.practicaintegradora.servicios.principales.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,8 @@ import java.util.List;
 public class ProductoServiceImplementacion implements ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
-
+    @Autowired
+    private CategoriaService categoriaService;
     @Override
     public Producto crear_modificar(Producto p) {
         try{
@@ -29,6 +32,12 @@ public class ProductoServiceImplementacion implements ProductoService {
         }catch (Exception e){
             return null;
         }
+    }
+
+    @Override
+    public List<Producto> findAllByCat(String cat) {
+        Categoria cate = categoriaService.findByDesc(cat);
+        return productoRepository.findProductoByCategoriasContains(cate);
     }
 
     @Override

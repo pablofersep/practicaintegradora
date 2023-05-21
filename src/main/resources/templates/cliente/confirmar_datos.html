@@ -35,15 +35,15 @@
         <div class="row">
             <div class="cell" th:text="#{fieldset.direccion}"></div>
             <div class="cell">
-                <div th:text="*{direccion.localidad}"/>,
-                <div th:text="*{direccion.nombre}"/>,
-                <div th:text="*{direccion.numero}"/>,
-                <div th:text="*{direccion.tipoVia}"/>,
-                <div th:text="*{direccion.portal}"/>,
-                <div th:text="*{direccion.planta}"/>,
-                <div th:text="*{direccion.puerta}"/>,
-                <div th:text="*{direccion.region}"/>,
-                <div th:text="*{direccion.codigoPostal}"/>
+                <label th:text="*{direccion.localidad}"/>,
+                <label th:text="*{direccion.nombre}"/>,
+                <label th:text="*{direccion.numero}"/>,
+                <label th:text="*{direccion.tipoVia}"/>,
+                <label th:text="*{direccion.portal}"/>,
+                <label th:text="*{direccion.planta}"/>,
+                <label th:text="*{direccion.puerta}"/>,
+                <label th:text="*{direccion.region}"/>,
+                <label th:text="*{direccion.codigoPostal}"/>
             </div>
         </div>
         <div class="row">
@@ -58,6 +58,7 @@
         </div>
     </div>
 </div>
-<form action="/registro/cliente/confirmar_datos" method="post">
-    <input type="submit" value="Enviar">
+<form action="/registro/cliente/confirmar_datos" method="post"
+      onsubmit="return confirm('¿Estas seguro de que quieres crear un cliente?')">
+    <input type="submit" th:value="#{submit}">
 </form>

@@ -16,20 +16,20 @@ import java.time.LocalDate;
 @Data
 public class RegistroClienteDatosPersonales {
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "{error.notnull}")
+    @NotBlank(message = "{error.notblank}")
     private String nombre;
-    @NotNull
-    @NotBlank
+    @NotNull(message = "{error.notnull}")
+    @NotBlank(message = "{error.notblank}")
     private String apellidos;
-    @NotNull
-    @ComprobarFechaNacimiento
+    @NotNull(message = "{error.notnull}")
+    @ComprobarFechaNacimiento(message = "{error.comprobarfechanacimiento}")
     private LocalDate fechaNacimiento;
-    @NotNull
-    @PaisExistente
+    @NotNull(message = "{error.notnull}")
+    @PaisExistente(message = "{error.paisexistente}")
     private String paisSeleccionado;
-    @NotNull
-    @GeneroExistente
+    @NotNull(message = "{error.notnull}")
+    @GeneroExistente(message = "{error.generoexistente}")
     private String generoSeleccionado;
 
 }

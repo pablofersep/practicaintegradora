@@ -66,6 +66,6 @@
             <div class="rojo" th:if="${#fields.hasErrors('codigoPostal')}" th:errors="*{codigoPostal}"/>
         </div>
     </fieldset>
-    <a class="button" href="http://localhost:8080/registro/cliente/datos_personales" role="button">Volver atras</a>
-    <input type="submit" value="Siguente Paso">
+    <a class="button" href="http://localhost:8080/registro/cliente/datos_personales" role="button" th:text="#{volveratras}"></a>
+    <input type="submit" th:value="#{submit.siguiente}"><input type="reset" th:value="#{reset}"><button th:text="#{blank}"></button>
 </form>

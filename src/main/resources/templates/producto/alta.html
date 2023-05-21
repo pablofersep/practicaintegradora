@@ -1,5 +1,6 @@
 <h2>-- Creacion de Producto --</h2>
-<form action="/producto/crear" th:object="${creacionProducto}" method="post">
+<form action="/producto/crear" th:object="${creacionProducto}" method="post"
+      onsubmit="return confirm('¿Estas seguro de que quieres crear un producto?')">
     <div class="table">
         <div class="row">
             <div class="cell bold">Campo</div>

@@ -27,6 +27,7 @@
             <input type="radio" th:value="${genero.siglas}" th:field="*{generoSeleccionado}"/><label th:text="${genero.nombre}"/>
         </label>
         <div class="rojo" th:if="${#fields.hasErrors('generoSeleccionado')}" th:errors="*{generoSeleccionado}"/>
+        <button th:text="#{selectgenero}"></button>
     </div>
-    <input type="submit" value="Siguente Paso">
+    <input type="submit" th:value="#{submit.siguiente}"><input type="reset" th:value="#{reset}"><button th:text="#{blank}"></button>
 </form>

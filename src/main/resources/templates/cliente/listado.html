@@ -28,7 +28,7 @@
         <input type="submit" value="Buscar">
     </fieldset>
 </form>
-<div class="red" th:text="${mensaje}"></div>
+<div class="mensaje" th:text="${mensaje}"></div>
 <div class="table">
     <div class="row">
         <div class="cell bold">Usuario</div>
@@ -36,8 +36,8 @@
         <div class="cell bold">Tipo</div>
         <div class="cell bold">Fecha Nacimiento</div>
         <div class="cell bold">Gasto Acumulado</div>
-        <div class="cell bold">¿Esta Borrado?</div>
-        <div class="cell bold">Detalle</div>
+        <div class="cell bold">Detalles</div>
+        <div class="cell bold">Esta Activo</div>
     </div>
     <div class="row" th:each="cliente : ${clientes}">
         <div class="cell" th:text="${cliente.id}"></div>

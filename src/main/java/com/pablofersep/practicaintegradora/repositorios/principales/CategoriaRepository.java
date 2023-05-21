@@ -9,5 +9,6 @@ import java.util.List;
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
     Categoria findCategoriaByCodigo(String codigo);
+    Categoria findCategoriaByDescripcionEquals(String cat);
 
 }

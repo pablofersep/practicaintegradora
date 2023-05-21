@@ -11,4 +11,5 @@ public interface CategoriaService {
     Set<Categoria> categoriasPorCodigos(List<String> codigos);
     Categoria crear_modificar(Categoria c);
     List<Categoria> findAll();
+    Categoria findByDesc(String cat);
 }

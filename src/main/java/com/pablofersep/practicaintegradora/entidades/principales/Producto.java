@@ -1,5 +1,6 @@
 package com.pablofersep.practicaintegradora.entidades.principales;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pablofersep.practicaintegradora.entidades.auxiliares.Auditoria;
 import com.pablofersep.practicaintegradora.entidades.auxiliares.Imagen;
 import com.pablofersep.practicaintegradora.formobjects.producto.CreacionProducto;
@@ -29,6 +30,7 @@ public class Producto {
     @Column(name = "gasto_acumulado")
     private BigDecimal gastoAcumulado;
     @ManyToMany
+    @JsonBackReference
     private Set<Categoria> categorias;
     @Column(name = "cantidad_almacen")
     private Integer cantidadAlmacen;

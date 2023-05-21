@@ -48,7 +48,7 @@ public class ControladorUsuario {
         if (usuario != null){
             mav.addObject("usuario", usuario);
         }else{
-            redirect.addAttribute("mensaje", "No existe producto con codigo " + id);
+            redirect.addAttribute("mensaje", "No existe usuario con email " + id);
             mav.setViewName("redirect:/usuario/listado");
         }
         return mav;

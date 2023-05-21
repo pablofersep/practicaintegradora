@@ -92,7 +92,7 @@ public class ControladorLogin {
 
         if (cookieClave.equals(user.getClave())) {
             actualizarUsuario(user);
-            mav.setViewName("redirect:/cliente/listado");//redireccionar a vue
+            mav.setViewName("redirect:http://localhost:5173/?usuario="+user.getEmail());//redireccionar a vue
             sesion.setAttribute("usuario", user);
             return mav;
         }
@@ -103,7 +103,7 @@ public class ControladorLogin {
                 cookie.setPath("/");
                 respuesta.addCookie(cookie);
                 actualizarUsuario(user);
-                mav.setViewName("redirect:/clientes/listado");//redireccionar a vue
+                mav.setViewName("redirect:http://localhost:5173/?usuario="+user.getEmail());//redireccionar a vue
                 sesion.setAttribute("usuario", user);
                 return mav;
             } else {
@@ -152,11 +152,11 @@ public class ControladorLogin {
         for (Cookie cookie : cookies){
             if (cookie.getName().equals("cookieUsuario") | cookie.getName().equals("cookieClave")){
                 Cookie temp = new Cookie(cookie.getName(),"");
-                temp.setDomain("/");
+                temp.setPath("/");
                 respuesta.addCookie(temp);
             }
         }
-        mav.setViewName("redirect:/cliente/listado");
+        mav.setViewName("redirect:http://localhost:5173/");
         return mav;
     }
     private void actualizarUsuario(Usuario user) {
