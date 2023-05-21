@@ -1,0 +1,31 @@
+<h2>-- Catalogo --</h2>
+<div class="table" th:object="${catalogo}">
+    <div class="row">
+        <div class="cell bold">Campo</div>
+        <div class="cell bold">Valor</div>
+    </div>
+    <div class="row">
+        <div class="cell">Codigo</div>
+        <div class="cell" th:text="*{id}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Proveedor</div>
+        <div class="cell" th:text="*{proveedor.nombre}"></div>
+    </div>
+    <div class="row">
+        <div class="cell">Periodo</div>
+        <div class="cell">
+            Inicio: <th:block th:text="*{periodo.fechaInicio}"/>
+            Final: <th:block th:text="*{periodo.fechaFinal}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell">Productos</div>
+        <div class="cell">
+            <li th:each="linea : *{lineasCatalogo}">
+                Prodcuto: <th:block th:text="${linea.producto.descripcion}"/>
+                Precio: <th:block th:text="${linea.precioUnitario}"/>
+            </li>
+        </div>
+    </div>
+</div>

@@ -9,7 +9,7 @@
     <div class="row" th:each="catalogo : ${catalogos}">
         <div class="cell" th:text="${catalogo.proveedor.nombre}"></div>
         <div class="cell" th:text="${catalogo.periodo.fechaInicio}"></div>
-        <div class="cell" th:text="${catalogo.periodo.fechaFin}"></div>
+        <div class="cell" th:text="${catalogo.periodo.fechaFinal}"></div>
         <div class="cell"><a th:href="|http://localhost:8080/catalogo/detalle/${catalogo.id}|">Detalles</a></div>
     </div>
 </div>

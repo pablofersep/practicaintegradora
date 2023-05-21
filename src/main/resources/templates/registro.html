@@ -5,8 +5,12 @@
 <div th:insert="~{${ruta}}"></div>
 <div>
     <select name="locales" id="locales">
-        <option value=""></option>
         <option th:each="idioma : ${idiomas}" th:value="${idioma.siglas}" th:text="${idioma.nombre}" />
+    </select>
+    <select id="estilos" onchange="triger(this)">
+        <option value=""></option>
+        <option th:value="@{/css/estandar.css}">Sin estilos</option>
+        <option th:value="@{/css/style.css}">Con estilos</option>
     </select>
 </div>
 </body>

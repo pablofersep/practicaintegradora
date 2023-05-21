@@ -21,8 +21,8 @@ public class RegistroClienteDatosCliente {
     private List<String> categoriasSeleccionadas;
     @NotNull(message = "{error.notnull}")
     private String comentarios;
-    @NotNull(message = "{error.licencia}")
-    @NotBlank(message = "{error.licencia}")
+    @NotNull(message = "")
+    @NotBlank(message = "")
     @Pattern(regexp = "on", message = "{error.licencia}")
     private String aceptaLicencia;
 

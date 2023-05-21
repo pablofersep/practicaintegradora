@@ -118,7 +118,6 @@ public class ControladorRegistroCliente {
     ) {
         ModelAndView mav = new ModelAndView();
         String step = (String) sesion.getAttribute("registro_cliente");
-        System.out.println(step);
         if (step == null || step.isEmpty() || step.equals("1")) {
             mav.setViewName("redirect:/registro/cliente/datos_personales");
             return mav;

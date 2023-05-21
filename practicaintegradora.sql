@@ -65,3 +65,5 @@ insert into categoria(codigo, descripcion, categoria_padre_codigo) values ("8", 
 insert into categoria(codigo, descripcion, categoria_padre_codigo) values ("9", "steampunk", "3");
 
 insert into aviso(descripcion, urgencia_aviso, fecha_creacion) values ("prueba", "Alta", "2001-12-09");
+
+insert into catalogo_proveedor_lineas_catalogo values (1, 2.33, 1);

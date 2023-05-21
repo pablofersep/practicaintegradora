@@ -67,5 +67,6 @@
         </div>
     </fieldset>
     <a class="button" href="http://localhost:8080/registro/cliente/datos_personales" role="button" th:text="#{volveratras}"></a>
-    <input type="submit" th:value="#{submit.siguiente}"><input type="reset" th:value="#{reset}"><button th:text="#{blank}"></button>
+    <input type="submit" th:value="#{submit.siguiente}"><input type="reset" th:value="#{reset}">
+    <input type="button" th:value="#{blank}" onclick="resetDatos_contacto();"/>
 </form>

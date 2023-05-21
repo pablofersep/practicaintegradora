@@ -21,13 +21,14 @@
         </select>
         <div class="rojo" th:if="${#fields.hasErrors('paisSeleccionado')}" th:errors="*{paisSeleccionado}"/>
     </div>
-    <div>
+    <div class="genero">
         <label th:text="#{label.genero}"></label>
         <label th:each="genero : ${generos}">
             <input type="radio" th:value="${genero.siglas}" th:field="*{generoSeleccionado}"/><label th:text="${genero.nombre}"/>
         </label>
         <div class="rojo" th:if="${#fields.hasErrors('generoSeleccionado')}" th:errors="*{generoSeleccionado}"/>
-        <button th:text="#{selectgenero}"></button>
+        <input type="button" th:value="#{selectgenero}" onclick="selectPrimerRadio('generoSeleccionado');"/>
     </div>
-    <input type="submit" th:value="#{submit.siguiente}"><input type="reset" th:value="#{reset}"><button th:text="#{blank}"></button>
+    <input type="submit" th:value="#{submit.siguiente}"><input type="reset" th:value="#{reset}">
+    <input type="button" th:value="#{blank}" onclick="resetDatos_personales();"/>
 </form>
