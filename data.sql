@@ -1,9 +1,0 @@
-/*
--- Query: SELECT * FROM practicaintegradora.proveedor
-LIMIT 0, 1000
-
--- Date: 2023-05-22 01:35
-*/
-INSERT INTO `` (`id`,`fecha_alta_entidad`,`fecha_borrado_entidad`,`fecha_final_bloqueo`,`fecha_ultima_modificacion`,`clase_proveedor`,`comentarios`,`codigo_postal`,`localidad`,`nombre_direccion`,`numero`,`planta`,`portal`,`puerta`,`region`,`tipo_via`,`documento`,`nombre`,`telefono_fijo`,`telefono_movil`,`tipo_documento`,`usuario_realiza_alta_email`,`usuario_realiza_borrado_email`,`usuario_realiza_ultima_modificacion_email`) VALUES (1,'2023-05-21',NULL,'1000-01-01','2023-05-21','B',NULL,'28001','Madrid','Tutan',3,'0',NULL,'a',NULL,'Gl','4546','Ahorramas SA','915403456','123123123','CIF',NULL,NULL,NULL);
-INSERT INTO `` (`id`,`fecha_alta_entidad`,`fecha_borrado_entidad`,`fecha_final_bloqueo`,`fecha_ultima_modificacion`,`clase_proveedor`,`comentarios`,`codigo_postal`,`localidad`,`nombre_direccion`,`numero`,`planta`,`portal`,`puerta`,`region`,`tipo_via`,`documento`,`nombre`,`telefono_fijo`,`telefono_movil`,`tipo_documento`,`usuario_realiza_alta_email`,`usuario_realiza_borrado_email`,`usuario_realiza_ultima_modificacion_email`) VALUES (2,'2023-05-21',NULL,'1000-01-01','2023-05-21','P',NULL,'28002','Oviedo','Camon',6,'0',NULL,'a',NULL,'Ps','5150','Mecadona','96512123','456456456','CIF',NULL,NULL,NULL);
-INSERT INTO `` (`id`,`fecha_alta_entidad`,`fecha_borrado_entidad`,`fecha_final_bloqueo`,`fecha_ultima_modificacion`,`clase_proveedor`,`comentarios`,`codigo_postal`,`localidad`,`nombre_direccion`,`numero`,`planta`,`portal`,`puerta`,`region`,`tipo_via`,`documento`,`nombre`,`telefono_fijo`,`telefono_movil`,`tipo_documento`,`usuario_realiza_alta_email`,`usuario_realiza_borrado_email`,`usuario_realiza_ultima_modificacion_email`) VALUES (3,'2023-05-21',NULL,'1000-01-01','2023-05-21','E',NULL,'28003','Toledo','Lillo',75,'0',NULL,'f',NULL,'Pz','2387','Indites','931567298','789789789','DNI',NULL,NULL,NULL);
