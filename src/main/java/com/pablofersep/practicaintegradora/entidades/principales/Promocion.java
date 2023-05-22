@@ -23,7 +23,7 @@ public class Promocion {
     private String descripcion;
     @Embedded
     private Periodo periodo;
-    @OneToMany
+    @ManyToMany
     private Set<Producto> productos;
     @Column
     private BigDecimal descuento;

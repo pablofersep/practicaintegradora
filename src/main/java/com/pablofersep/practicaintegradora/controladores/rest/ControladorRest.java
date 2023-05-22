@@ -94,8 +94,9 @@ public class ControladorRest {
         for (LineaCarrito lc : carrito.getLineasCarrito()){
             producto = lc.getProducto();
             int i = producto.getCantidadAlmacen()- lc.getUnidades();
-            //if (i < 0) return false;
             producto.setCantidadAlmacen(i);
+            producto.setUnidadesVendidas(producto.getUnidadesVendidas()+ lc.getUnidades());
+            producto.setGastoAcumulado(producto.getPrecio().multiply(BigDecimal.valueOf(lc.getUnidades())));
             Producto comprobacion = productoService.crear_modificar(producto);
             if (comprobacion == null) return 1;
             ControladorAviso.creacionAviso(comprobacion,productoService, urgenciaAvisoService, avisoService);
