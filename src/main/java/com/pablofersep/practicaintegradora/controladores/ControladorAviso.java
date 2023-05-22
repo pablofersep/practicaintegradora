@@ -85,7 +85,7 @@ public class ControladorAviso {
         if (p.getCantidadAlmacen() < p.getUmbralSolicitudProveedor()){
             a.setUrgenciaAviso(us.getUrgenciaByCodigo("M"));
             a.setFechaCreacion(LocalDate.now());
-            a.setDescripcion("Fecha-"+LocalDate.now()+"-Codigo-"+ p.getCodigo()+": Se rebasa el umbral de solicitud");
+            a.setDescripcion("Fecha-"+LocalDate.now()+"--Producto_"+p.getCodigo()+":"+ p.getDescripcion()+": Se rebasa el umbral de solicitud");
             as.crear_modificar(a);
         }if (p.getCantidadAlmacen() < p.getUmbralOcultoEnTienda()) {
             a.setUrgenciaAviso(us.getUrgenciaByCodigo("A"));

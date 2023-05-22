@@ -234,7 +234,9 @@ public class ControladorProducto {
 
         Producto p = new Producto();
         p.bind(formObj, categoriaService);
-
+        p.setUnidadesVendidas(0);
+        p.setValoracionProducto(0);
+        p.setGastoAcumulado(BigDecimal.valueOf(0));
         Auditoria auditoria = new Auditoria();
         auditoria.setFechaAltaEntidad(LocalDateTime.now().toLocalDate());
         auditoria.setFechaUltimaModificacion(LocalDateTime.now().toLocalDate());

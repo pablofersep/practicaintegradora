@@ -20,8 +20,12 @@ public class TipoClienteServiceImplementacion implements TipoClienteService {
         TipoCliente result = new TipoCliente();
         result.setGastoUmbral(BigDecimal.valueOf(0));
         for (TipoCliente tc : tiposCliente){
+            System.out.println(tc.getNombre());
+            System.out.println(c.getGastoAcumuladoCliente());
+            System.out.println(tc.getGastoUmbral());
+            System.out.println(tc.getGastoUmbral().compareTo(c.getGastoAcumuladoCliente()));
             if (tc.getGastoUmbral().compareTo(c.getGastoAcumuladoCliente()) <= 0 ){
-                if (tc.getGastoUmbral().compareTo(result.getGastoUmbral()) == -1 ){
+                if (tc.getGastoUmbral().compareTo(result.getGastoUmbral()) == 1 ){
                     result = tc;
                 }
             }

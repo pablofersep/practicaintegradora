@@ -7,6 +7,7 @@ import com.pablofersep.practicaintegradora.entidades.principales.*;
 import com.pablofersep.practicaintegradora.formobjects.EmailDTO;
 import com.pablofersep.practicaintegradora.formobjects.LineaCarritoDTO;
 import com.pablofersep.practicaintegradora.servicios.datos.EstadoPedidoService;
+import com.pablofersep.practicaintegradora.servicios.datos.TipoClienteService;
 import com.pablofersep.practicaintegradora.servicios.datos.UrgenciaAvisoService;
 import com.pablofersep.practicaintegradora.servicios.principales.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ public class ControladorRest {
     private EstadoPedidoService estadoPedidoService;
     @Autowired
     private PedidoService pedidoService;
+    @Autowired
+    private TipoClienteService tipoClienteService;
 
     @GetMapping("/recuperarClave")
     public String recuperarClave(@RequestParam String correo) {
@@ -84,7 +87,8 @@ public class ControladorRest {
         Pedido pedido = new Pedido();
         Cliente cliente = carrito.getCliente();
         cliente.setGastoAcumuladoCliente(cliente.getGastoAcumuladoCliente().add(carrito.getPrecio()));
-
+        cliente.setTipoCliente(tipoClienteService.tipoClienteEnFuncionGasto(cliente));
+        System.out.println(tipoClienteService.tipoClienteEnFuncionGasto(cliente));
         pedido.setCliente(cliente);
         pedido.setPrecioTotal(carrito.getPrecio());
         pedido.setFechaRealizacion(LocalDate.now());

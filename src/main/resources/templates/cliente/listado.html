@@ -9,7 +9,7 @@
             <label>Tipo de Cliente</label>
             <select name="tipoCliente">
                 <option value="All">Todos</option>
-                <option th:each="tipoCliente : ${tiposCliente}" th:value="${tipoCliente.siglas}" th:text="${tipoCliente.nombre}"></option>
+                <option th:each="tipoCliente : ${tiposCliente}" th:value="${tipoCliente.nombre}" th:text="${tipoCliente.nombre}"></option>
             </select>
         </div>
         <div>
