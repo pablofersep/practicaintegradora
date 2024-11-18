@@ -83,6 +83,7 @@ public class ControladorRest {
             @RequestBody EmailDTO email
     ){
         Carrito carrito = carritoService.findCarritoByEmailCliente(email.getEmail());
+        //Early exit
         if (carrito.getLineasCarrito().size() == 0) return 0;
         Pedido pedido = new Pedido();
         Cliente cliente = carrito.getCliente();

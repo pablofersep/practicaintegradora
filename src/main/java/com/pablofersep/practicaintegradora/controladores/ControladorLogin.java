@@ -156,7 +156,27 @@ public class ControladorLogin {
                 respuesta.addCookie(temp);
             }
         }
-        mav.setViewName("redirect:http://localhost:5173/");
+        mav.setViewName("redirect:http://localhost:5173");
+        return mav;
+    }
+
+    @GetMapping(value = "/desconectar/admin")
+    public ModelAndView desconectarAdmin(
+            HttpSession sesion,
+            HttpServletResponse respuesta,
+            HttpServletRequest solicitud
+    ){
+        ModelAndView mav = new ModelAndView();
+        sesion.invalidate();
+        Cookie[] cookies = solicitud.getCookies();
+        for (Cookie cookie : cookies){
+            if (cookie.getName().equals("cookieUsuario") | cookie.getName().equals("cookieClave")){
+                Cookie temp = new Cookie(cookie.getName(),"");
+                temp.setPath("/");
+                respuesta.addCookie(temp);
+            }
+        }
+        mav.setViewName("redirect:http://localhost:8080/usuario/listado");
         return mav;
     }
     private void actualizarUsuario(Usuario user) {

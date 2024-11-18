@@ -7,7 +7,6 @@
     <label class="rojo" th:text="${error}"></label>
     <br>
   </th:block>
-  <a id="olvidarClave" href="" th:usuario="${email}" th:onclick="llamame(this.getAttribute('usuario'))" >¿Has olvidado tu contraseña?</a>
   <input type="button" value="Mostrar Contraseña" onmousedown="showPassword('clave', 'confirmarClave')" onmouseup="hidePassword('clave', 'confirmarClave')"/>
   <input type="submit" value="Enviar"/>
   <input type="reset" value="Reesttablecer">
