@@ -1,1 +1,2 @@
-Práctica realizada durante el segundo curso de la doble titulación en Desarrollo de Aplicaciones Multiplataforma y Desarrollo de Aplicaciones Web
+Práctica realizada durante el segundo curso de la doble titulación en Desarrollo de Aplicaciones Multiplataforma y Desarrollo de Aplicaciones Web.
+La aplicación consta de un portal de administración de una tienda desde el cual se pueden administrar usuarios, pedidos, productos, proveedores y pedidos a los mismos, promociones y avisos automatizadps en función del stock. Tambien consta de microservicios para poder realizar compras a traves de otra aplicación.
